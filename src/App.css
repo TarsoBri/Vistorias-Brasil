@@ -1,0 +1,15 @@
+.container {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.container_erro {
+    background-color: #ff7272;
+    border-radius: 5px;
+    border: 2px solid red;
+    text-align: center;
+
+}
