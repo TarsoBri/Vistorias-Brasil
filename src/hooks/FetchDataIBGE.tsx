@@ -5,7 +5,7 @@ import { Regions } from "../interfaces/Regions";
 
 export const FetchDataIBGE = () => {
   const [data, setData] = useState<Regions[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const fetchIBGE = async (url: string) => {

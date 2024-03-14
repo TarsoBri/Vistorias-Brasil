@@ -1,5 +1,6 @@
 export interface Regions {
-  id: number;
-  sigla: string;
   nome: string;
+  id?: number;
+  sigla?: string;
+  codigo_ibge?: string;
 }

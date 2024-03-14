@@ -2,6 +2,7 @@ import styles from "./CreateClient.module.css";
 
 // Interface
 import { Clients } from "../../interfaces/Clients";
+import { Address } from "../../interfaces/Address";
 
 // Navigate
 import { useNavigate } from "react-router-dom";
@@ -13,15 +14,6 @@ import Loading from "../Loading/Loading";
 import { useState, ChangeEvent, useEffect } from "react";
 import { CreateData } from "../../hooks/CreateData";
 import { FetchDataIBGE } from "../../hooks/FetchDataIBGE";
-
-interface Address {
-  CEP: number;
-  state: string;
-  city: string;
-  road: string;
-  number?: number;
-  reference?: string;
-}
 
 const CreateClient = () => {
   const url: string = "/clients";
@@ -35,7 +27,11 @@ const CreateClient = () => {
     fetchStatesIBGE(urlStateIBGE);
   }, [urlStateIBGE]);
 
-  const { fetchIBGE: fetchCitysIBGE, data: citysIBGE } = FetchDataIBGE();
+  const {
+    fetchIBGE: fetchCitysIBGE,
+    data: citysIBGE,
+    loading: loadingCityIBGE,
+  } = FetchDataIBGE();
 
   const initialAddressState: Address = {
     CEP: 0,
@@ -52,14 +48,12 @@ const CreateClient = () => {
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const [status, setStatus] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>(initialAddressState);
-  const [acronym, setAcronym] = useState<string>("");
 
   const [errorPassword, setErrorPassword] = useState<string>("");
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
     switch (name) {
       case "firstName":
         setFirstName(value);
@@ -73,8 +67,16 @@ const CreateClient = () => {
       case "confirmedPassword":
         setConfirmedPassword(value);
         break;
-      case "CEP":
       case "state":
+        setAddress((prevAddress) => ({
+          ...prevAddress,
+          [name]: value,
+        }));
+        fetchCitysIBGE(
+          `https://brasilapi.com.br/api/ibge/municipios/v1/${value}?providers=dados-abertos-br,gov,wikipedia`
+        );
+        break;
+      case "CEP":
       case "city":
       case "road":
       case "number":
@@ -87,13 +89,6 @@ const CreateClient = () => {
       default:
         return;
     }
-
-    console.log(acronym);
-    // const urlCitysIBGE: string = `https://brasilapi.com.br/api/ibge/municipios/v1/${e.target.getAttribute(
-    //   "data-acronym"
-    // )}?providers=dados-abertos-br,gov,wikipedia`;
-
-    // fetchCitysIBGE(urlCitysIBGE);
   };
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -127,7 +122,7 @@ const CreateClient = () => {
 
   return (
     <div className={styles.form_div}>
-      <h2>Criar cliente</h2>
+      <h2>Criar vistoria para sua casa</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           <span>Nome: </span>
@@ -205,11 +200,7 @@ const CreateClient = () => {
             <option value="">Selecione seu estado.</option>
             {statesIBGE &&
               statesIBGE.map((data) => (
-                <option
-                  onClick={() => setAcronym(data.sigla)}
-                  key={data.id}
-                  value={data.nome}
-                >
+                <option key={data.id} value={data.sigla}>
                   {data.nome}
                 </option>
               ))}
@@ -223,27 +214,18 @@ const CreateClient = () => {
             required
             value={address.city}
             onChange={handleChange}
+            disabled={loadingCityIBGE ? true : false}
           >
-            <option value="">Selecione sua cidade.</option>
+            <option value="">
+              {loadingCityIBGE ? "Aguarde..." : "Selecione sua cidade."}
+            </option>
             {citysIBGE &&
               citysIBGE.map((data) => (
-                <option key={data.id} value={data.nome}>
+                <option key={data.codigo_ibge} value={data.nome}>
                   {data.nome}
                 </option>
               ))}
           </select>
-        </label>
-
-        <label>
-          <span>Cidade: </span>
-          <input
-            type="text"
-            name="city"
-            placeholder="Insira sua cidade."
-            required
-            value={address.city}
-            onChange={handleChange}
-          />
         </label>
 
         <label>

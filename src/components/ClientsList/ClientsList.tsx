@@ -30,8 +30,9 @@ const ClientsList = () => {
                   <div key={client._id}>
                     <h2>Nome: {client.firstName}</h2>
                     <p>Email: {client.email}</p>
-                    <p>Estado: {client.address.state}</p>
-                    <p>Cidade: {client.address.city}</p>
+                    <p>
+                      {client.address.city} - {client.address.state}
+                    </p>
                     <div className={styles.status}>
                       <p>Vistoria</p>
                       <div
