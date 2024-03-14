@@ -7,7 +7,7 @@ import { Clients } from "../interfaces/Clients";
 import { api } from "../Apis/api";
 
 export const CreateData = (url: string) => {
-  const { setData, data } = FetchData(url);
+  const { setData } = FetchData(url);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export const CreateData = (url: string) => {
     await api
       .post(url, data)
       .then((res) => setData((prevData) => [...prevData, res.data]))
-      .catch(() => setError("Houve algum erro ao criar cliente:"))
+      .catch(() => setError("Houve algum erro ao criar o cliente."))
       .finally(() => {
         setLoading(false);
         setRedirect(true);

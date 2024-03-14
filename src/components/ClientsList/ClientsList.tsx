@@ -28,8 +28,19 @@ const ClientsList = () => {
               {clients.length > 0 ? (
                 clients.map((client) => (
                   <div key={client._id}>
-                    <h2>{client.firstName}</h2>
-                    <p>{client.email}</p>
+                    <h2>Nome: {client.firstName}</h2>
+                    <p>Email: {client.email}</p>
+                    <p>Estado: {client.address.state}</p>
+                    <p>Cidade: {client.address.city}</p>
+                    <div className={styles.status}>
+                      <p>Vistoria</p>
+                      <div
+                        className={styles.status_icon}
+                        style={{
+                          backgroundColor: client.status ? "green" : "red",
+                        }}
+                      ></div>
+                    </div>
                     <button
                       onClick={() => deleteClient(client._id, clients, setData)}
                     >

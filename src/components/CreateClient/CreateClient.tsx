@@ -1,23 +1,43 @@
 import styles from "./CreateClient.module.css";
 
+// Interface
 import { Clients } from "../../interfaces/Clients";
 
 // Navigate
 import { useNavigate } from "react-router-dom";
 
+// Components
+import Loading from "../Loading/Loading";
+
 // hooks
 import { useState, ChangeEvent, useEffect } from "react";
 import { CreateData } from "../../hooks/CreateData";
-import Loading from "../Loading/Loading";
+import { FetchDataIBGE } from "../../hooks/FetchDataIBGE";
+
+interface Address {
+  CEP: number;
+  state: string;
+  city: string;
+  road: string;
+  number?: number;
+  reference?: string;
+}
 
 const CreateClient = () => {
   const url: string = "/clients";
-
+  const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
   const navigate = useNavigate();
 
   const { createClient, loading, redirect, error } = CreateData(url);
 
-  const initialAddressState = {
+  const { fetchIBGE: fetchStatesIBGE, data: statesIBGE } = FetchDataIBGE();
+  useEffect(() => {
+    fetchStatesIBGE(urlStateIBGE);
+  }, [urlStateIBGE]);
+
+  const { fetchIBGE: fetchCitysIBGE, data: citysIBGE } = FetchDataIBGE();
+
+  const initialAddressState: Address = {
     CEP: 0,
     state: "",
     city: "",
@@ -28,10 +48,16 @@ const CreateClient = () => {
 
   const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [status, setStatus] = useState<boolean>(true);
-  const [address, setAddress] = useState(initialAddressState);
+  const [password, setPassword] = useState<string>("");
+  const [confirmedPassword, setConfirmedPassword] = useState<string>("");
+  const [status, setStatus] = useState<boolean>(false);
+  const [address, setAddress] = useState<Address>(initialAddressState);
+  const [acronym, setAcronym] = useState<string>("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const [errorPassword, setErrorPassword] = useState<string>("");
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     switch (name) {
@@ -41,8 +67,11 @@ const CreateClient = () => {
       case "email":
         setEmail(value);
         break;
-      case "status":
-        setStatus(!status);
+      case "password":
+        setPassword(value);
+        break;
+      case "confirmedPassword":
+        setConfirmedPassword(value);
         break;
       case "CEP":
       case "state":
@@ -58,27 +87,43 @@ const CreateClient = () => {
       default:
         return;
     }
+
+    console.log(acronym);
+    // const urlCitysIBGE: string = `https://brasilapi.com.br/api/ibge/municipios/v1/${e.target.getAttribute(
+    //   "data-acronym"
+    // )}?providers=dados-abertos-br,gov,wikipedia`;
+
+    // fetchCitysIBGE(urlCitysIBGE);
   };
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (password !== confirmedPassword) {
+      return setErrorPassword("Erro: Senhas diferentes!");
+    }
     const formData: Clients = {
       firstName,
+      password,
       email,
       status,
       address,
     };
 
     createClient(formData);
-
-    setFirstName("");
-    setEmail("");
-    setAddress(initialAddressState);
   };
 
   useEffect(() => {
-    redirect && navigate("/");
-  }, [redirect, navigate]);
+    if (!error) {
+      setPassword("");
+      setConfirmedPassword("");
+      setFirstName("");
+      setEmail("");
+      setAddress(initialAddressState);
+
+      redirect && navigate("/");
+    }
+  }, [redirect, navigate, error]);
 
   return (
     <div className={styles.form_div}>
@@ -103,7 +148,34 @@ const CreateClient = () => {
             name="email"
             placeholder="Insira seu email."
             required
+            autoComplete="username"
             value={email}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          <span>Senha: </span>
+          <input
+            type="password"
+            name="password"
+            placeholder="Insira sua senha."
+            required
+            value={password}
+            autoComplete="current-password"
+            onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          <span>Confirmar senha: </span>
+          <input
+            type="password"
+            name="confirmedPassword"
+            placeholder="Confirme sua senha."
+            required
+            value={confirmedPassword}
+            autoComplete="current-password"
             onChange={handleChange}
           />
         </label>
@@ -124,14 +196,42 @@ const CreateClient = () => {
 
         <label>
           <span>Estado: </span>
-          <input
-            type="text"
+          <select
             name="state"
-            placeholder="Insira seu estado."
             required
             value={address.state}
             onChange={handleChange}
-          />
+          >
+            <option value="">Selecione seu estado.</option>
+            {statesIBGE &&
+              statesIBGE.map((data) => (
+                <option
+                  onClick={() => setAcronym(data.sigla)}
+                  key={data.id}
+                  value={data.nome}
+                >
+                  {data.nome}
+                </option>
+              ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Cidade: </span>
+          <select
+            name="city"
+            required
+            value={address.city}
+            onChange={handleChange}
+          >
+            <option value="">Selecione sua cidade.</option>
+            {citysIBGE &&
+              citysIBGE.map((data) => (
+                <option key={data.id} value={data.nome}>
+                  {data.nome}
+                </option>
+              ))}
+          </select>
         </label>
 
         <label>
@@ -164,7 +264,6 @@ const CreateClient = () => {
             type="number"
             name="number"
             placeholder="Insira seu número."
-            required
             value={address.number > 0 ? address.number : ""}
             onChange={handleChange}
           />
@@ -190,6 +289,11 @@ const CreateClient = () => {
         {error && (
           <div className="container_erro">
             <p>{error}</p>
+          </div>
+        )}
+        {errorPassword && (
+          <div className="container_erro">
+            <p>{errorPassword}</p>
           </div>
         )}
       </form>
