@@ -8,7 +8,7 @@ export const FetchDataIBGE = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const fetchIBGE = async (url: string) => {
+  const handleFetchIBGE = async (url: string) => {
     setLoading(true);
     await axios
       .get(url)
@@ -17,5 +17,5 @@ export const FetchDataIBGE = () => {
     setLoading(false);
   };
 
-  return { fetchIBGE, data, loading, error };
+  return { handleFetchIBGE, data, loading, error };
 };

@@ -20,15 +20,16 @@ const CreateClient = () => {
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
   const navigate = useNavigate();
 
-  const { createClient, loading, redirect, error } = CreateData(url);
+  const { handleCreateClient, loading, redirect, error } = CreateData(url);
 
-  const { fetchIBGE: fetchStatesIBGE, data: statesIBGE } = FetchDataIBGE();
+  const { handleFetchIBGE: fetchStatesIBGE, data: statesIBGE } =
+    FetchDataIBGE();
   useEffect(() => {
     fetchStatesIBGE(urlStateIBGE);
   }, [urlStateIBGE]);
 
   const {
-    fetchIBGE: fetchCitysIBGE,
+    handleFetchIBGE: fetchCitysIBGE,
     data: citysIBGE,
     loading: loadingCityIBGE,
   } = FetchDataIBGE();
@@ -105,7 +106,7 @@ const CreateClient = () => {
       address,
     };
 
-    createClient(formData);
+    handleCreateClient(formData);
   };
 
   useEffect(() => {
@@ -264,7 +265,7 @@ const CreateClient = () => {
 
         <button
           type="submit"
-          className={!loading ? styles.submit : styles.submit_loading}
+          className={!loading ? "submit" : "submit_loading"}
         >
           {!loading ? "Enviar" : <Loading />}
         </button>

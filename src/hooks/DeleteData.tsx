@@ -6,7 +6,7 @@ export const DeleteData = (url: string) => {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState("");
 
-  const deleteClient = async (
+  const handleDeleteClient = async (
     id: string | undefined,
     data: Clients[],
     setData: Dispatch<SetStateAction<Clients[]>>
@@ -22,5 +22,5 @@ export const DeleteData = (url: string) => {
     setData(items);
   };
 
-  return { deleteClient, loading, erro };
+  return { handleDeleteClient, loading, erro };
 };

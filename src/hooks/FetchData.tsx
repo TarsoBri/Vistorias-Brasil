@@ -11,7 +11,7 @@ export const FetchData = (url: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  const fetch = async () => {
+  const handleFetch = async () => {
     setLoading(true);
     await api
       .get(url)
@@ -20,5 +20,5 @@ export const FetchData = (url: string) => {
     setLoading(false);
   };
 
-  return { fetch, data, setData, loading, error };
+  return { handleFetch, data, setData, loading, error };
 };

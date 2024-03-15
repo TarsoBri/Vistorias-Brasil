@@ -13,7 +13,7 @@ export const CreateData = (url: string) => {
   const [redirect, setRedirect] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const createClient = async (data: Clients) => {
+  const handleCreateClient = async (data: Clients) => {
     setLoading(true);
 
     await api
@@ -26,5 +26,5 @@ export const CreateData = (url: string) => {
       });
   };
 
-  return { createClient, loading, error, redirect };
+  return { handleCreateClient, loading, error, redirect };
 };

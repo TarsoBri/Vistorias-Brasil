@@ -9,6 +9,8 @@ import NavBar from "./components/NavBar/NavBar";
 // Pages
 import Home from "./pages/Home/Home";
 import Create from "./pages/Create/Create";
+import Login from "./pages/Login/Login";
+import EnterLogin from "./pages/EnterLogin/EnterLogin";
 
 function App() {
   return (
@@ -18,7 +20,10 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/" element={<Home />} />
+
             <Route path="/CreateClient" element={<Create />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/EnterLogin" element={<EnterLogin />} />
           </Routes>
         </div>
       </div>

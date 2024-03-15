@@ -7,14 +7,20 @@ import { useEffect } from "react";
 const ClientsList = () => {
   const url: string = "/clients";
 
-  const { fetch, data: clients, setData, loading, error } = FetchData(url);
+  const {
+    handleFetch,
+    data: clients,
+    setData,
+    loading,
+    error,
+  } = FetchData(url);
 
   useEffect(() => {
-    fetch();
+    handleFetch();
   }, []);
 
   const {
-    deleteClient,
+    handleDeleteClient,
     // loading: loading_delete,
     // erro: error_delete,
   } = DeleteData(url);
@@ -43,7 +49,9 @@ const ClientsList = () => {
                       ></div>
                     </div>
                     <button
-                      onClick={() => deleteClient(client._id, clients, setData)}
+                      onClick={() =>
+                        handleDeleteClient(client._id, clients, setData)
+                      }
                     >
                       Excluir
                     </button>

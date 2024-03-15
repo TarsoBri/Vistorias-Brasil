@@ -1,22 +1,12 @@
-.form_div {
+.container {
     width: 70vw;
-    max-width: 500px;
+    max-width: 400px;
     margin-block: 2em 5em;
-
-    h2 {
-        text-align: center;
-        margin-bottom: 1em;
-    }
 
     .form {
         display: flex;
         gap: 2em;
         flex-direction: column;
-
-        h3 {
-            margin: 0;
-            margin-top: 1em;
-        }
 
         label {
             display: flex;
@@ -26,8 +16,7 @@
                 margin-bottom: 10px;
             }
 
-            input,
-            select {
+            input {
                 font-size: 1em;
                 padding: .5em;
                 border-radius: 5px;

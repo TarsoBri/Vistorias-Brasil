@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <nav className={style.navbar}>
-      <h1 className={style.title}>
+      <span className={style.title}>
         <Link to="/">Vistorias Brasil</Link>
-      </h1>
+      </span>
 
       <ul className={style.routes}>
         <li>
-          <Link to="/CreateClient">Criar</Link>
-          <Link to="/CreateClient">Entrar / Cadastrar</Link>
+          <Link to="/Login">Entrar / Cadastrar</Link>
+          <Link to="/about">Sobre </Link>
         </li>
       </ul>
     </nav>
