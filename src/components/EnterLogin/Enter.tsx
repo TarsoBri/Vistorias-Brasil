@@ -4,17 +4,20 @@ import styles from "./Enter.module.css";
 import Loading from "../Loading/Loading";
 
 // hooks
-import { useState, ChangeEvent, FormEvent } from "react";
-import { LoginUser } from "../../hooks/LoginUser";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useLoginUser } from "../../hooks/useLoginUser";
+
+import { useNavigate } from "react-router-dom";
 
 const Enter = () => {
   const url = "/clients/login";
 
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { handleLoginUser, loading, error } = LoginUser(url);
-
+  const { handleLoginUser, loading, error } = useLoginUser(url);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     switch (name) {

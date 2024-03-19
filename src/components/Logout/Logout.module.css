@@ -1,0 +1,30 @@
+.logout_opacity {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: black;
+    opacity: .6;
+    z-index: 1;
+}
+
+.logout_container {
+    z-index: 2;
+    text-align: center;
+    margin: 0 auto;
+    width: 50vw;
+    padding: 0 4em;
+    max-width: 300px;
+    border-radius: 10px;
+    height: 400px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(85, 85, 151);
+    box-shadow: 5px 5px 10px #0000008c;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    right: 0;
+    gap: 2em;
+}

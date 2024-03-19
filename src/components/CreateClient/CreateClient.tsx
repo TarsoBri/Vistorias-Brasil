@@ -12,18 +12,18 @@ import Loading from "../Loading/Loading";
 
 // hooks
 import { useState, ChangeEvent, useEffect } from "react";
-import { CreateData } from "../../hooks/CreateData";
-import { FetchDataIBGE } from "../../hooks/FetchDataIBGE";
+import { useCreateData } from "../../hooks/useCreateData";
+import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
 
 const CreateClient = () => {
   const url: string = "/clients";
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
   const navigate = useNavigate();
 
-  const { handleCreateClient, loading, redirect, error } = CreateData(url);
+  const { handleCreateClient, loading, redirect, error } = useCreateData(url);
 
   const { handleFetchIBGE: fetchStatesIBGE, data: statesIBGE } =
-    FetchDataIBGE();
+    useFetchDataIBGE();
   useEffect(() => {
     fetchStatesIBGE(urlStateIBGE);
   }, [urlStateIBGE]);
@@ -32,7 +32,7 @@ const CreateClient = () => {
     handleFetchIBGE: fetchCitysIBGE,
     data: citysIBGE,
     loading: loadingCityIBGE,
-  } = FetchDataIBGE();
+  } = useFetchDataIBGE();
 
   const initialAddressState: Address = {
     CEP: 0,
@@ -45,12 +45,14 @@ const CreateClient = () => {
 
   const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmedPassword, setConfirmedPassword] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [status, setStatus] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>(initialAddressState);
 
+  const [password, setPassword] = useState<string>("");
+  const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const [errorPassword, setErrorPassword] = useState<string>("");
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
@@ -96,30 +98,57 @@ const CreateClient = () => {
     e.preventDefault();
 
     if (password !== confirmedPassword) {
-      return setErrorPassword("Erro: Senhas diferentes!");
+      return setErrorPassword("Senhas diferentes!");
+    } else {
+      setErrorPassword("");
     }
+
     const formData: Clients = {
       firstName,
       password,
       email,
       status,
+      phone,
       address,
     };
 
     handleCreateClient(formData);
-  };
 
-  useEffect(() => {
     if (!error) {
       setPassword("");
       setConfirmedPassword("");
       setFirstName("");
       setEmail("");
       setAddress(initialAddressState);
-
-      redirect && navigate("/");
     }
-  }, [redirect, navigate, error]);
+  };
+
+  const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    let input = e.target.value;
+
+    // Remove todos os caracteres que não são números
+    input = input.replace(/\D/g, "");
+
+    // Formata o número de telefone
+    if (input.length <= 2) {
+      // Adiciona o DDD
+      input = `(${input}`;
+    } else if (input.length <= 6) {
+      // Adiciona o primeiro bloco de números
+      input = `(${input.slice(0, 2)}) ${input.slice(2)}`;
+    } else if (input.length <= 10) {
+      // Adiciona o segundo bloco de números
+      input = `(${input.slice(0, 2)}) ${input.slice(2, 6)}-${input.slice(6)}`;
+    } else {
+      // Adiciona o código de país e formata o restante
+      input = `+${input.slice(0, 2)} (${input.slice(2, 4)}) ${input.slice(
+        4,
+        9
+      )}-${input.slice(9)}`;
+    }
+
+    setPhone(input);
+  };
 
   return (
     <div className={styles.form_div}>
@@ -147,6 +176,19 @@ const CreateClient = () => {
             autoComplete="username"
             value={email}
             onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          <span>Telefone: </span>
+          <input
+            type="text"
+            value={phone}
+            required
+            placeholder="Digite seu telefone"
+            onChange={handleChangePhone}
+            minLength={18}
+            maxLength={19}
           />
         </label>
 
@@ -247,7 +289,7 @@ const CreateClient = () => {
             type="number"
             name="number"
             placeholder="Insira seu número."
-            value={address.number > 0 ? address.number : ""}
+            value={address.number && address.number > 0 ? address.number : ""}
             onChange={handleChange}
           />
         </label>
@@ -269,14 +311,11 @@ const CreateClient = () => {
         >
           {!loading ? "Enviar" : <Loading />}
         </button>
-        {error && (
+        {[error, errorPassword].filter(Boolean).length > 0 && (
           <div className="container_erro">
-            <p>{error}</p>
-          </div>
-        )}
-        {errorPassword && (
-          <div className="container_erro">
-            <p>{errorPassword}</p>
+            {[error, errorPassword].filter(Boolean).map((err, index) => (
+              <p key={index}>{err}</p>
+            ))}
           </div>
         )}
       </form>

@@ -9,13 +9,19 @@ body {
   overflow-x: hidden;
 }
 
-
+.hide {
+  display: none !important;
+}
 
 
 
 
 /* Buttons */
+
+
+
 .submit,
+.button1,
 .submit_loading {
   color: white;
   background-color: rgb(130, 143, 240);
@@ -36,4 +42,13 @@ body {
 .submit:hover {
   background-color: rgb(103, 115, 205);
 
+}
+
+.button1 {
+  color: black;
+  background-color: white;
+}
+
+.button1:hover {
+  background-color: rgb(228, 228, 228);
 }

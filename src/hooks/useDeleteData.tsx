@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { api } from "../Apis/api";
 import { Clients } from "../interfaces/Clients";
 
-export const DeleteData = (url: string) => {
+export const useDeleteData = (url: string) => {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState("");
 

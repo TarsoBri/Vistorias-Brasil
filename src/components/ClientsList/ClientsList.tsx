@@ -1,29 +1,16 @@
 import styles from "./ClientsList.module.css";
 
-import { FetchData } from "../../hooks/FetchData";
-import { DeleteData } from "../../hooks/DeleteData";
+import { useFetchData } from "../../hooks/useFetchData";
 import { useEffect } from "react";
 
 const ClientsList = () => {
   const url: string = "/clients";
 
-  const {
-    handleFetch,
-    data: clients,
-    setData,
-    loading,
-    error,
-  } = FetchData(url);
+  const { handleFetch, data: users, loading, error } = useFetchData(url);
 
   useEffect(() => {
     handleFetch();
   }, []);
-
-  const {
-    handleDeleteClient,
-    // loading: loading_delete,
-    // erro: error_delete,
-  } = DeleteData(url);
 
   return (
     <div className={styles.clients_container}>
@@ -31,30 +18,28 @@ const ClientsList = () => {
         <>
           {!loading ? (
             <>
-              {clients.length > 0 ? (
-                clients.map((client) => (
-                  <div key={client._id}>
-                    <h2>Nome: {client.firstName}</h2>
-                    <p>Email: {client.email}</p>
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <div key={user._id}>
+                    <h2>Nome: {user.firstName}</h2>
+                    <p>Email: {user.email}</p>
                     <p>
-                      {client.address.city} - {client.address.state}
+                      {user.address.city} - {user.address.state}
                     </p>
                     <div className={styles.status}>
-                      <p>Vistoria</p>
+                      <p>
+                        Status:
+                        {user.status
+                          ? " Vistoria realizada!"
+                          : " Vistoria não realizada!"}
+                      </p>
                       <div
                         className={styles.status_icon}
                         style={{
-                          backgroundColor: client.status ? "green" : "red",
+                          backgroundColor: user.status ? "green" : "red",
                         }}
                       ></div>
                     </div>
-                    <button
-                      onClick={() =>
-                        handleDeleteClient(client._id, clients, setData)
-                      }
-                    >
-                      Excluir
-                    </button>
                   </div>
                 ))
               ) : (

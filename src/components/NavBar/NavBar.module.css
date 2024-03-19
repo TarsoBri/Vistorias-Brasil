@@ -26,13 +26,21 @@
     margin: 0;
 }
 
-.routes li a {
+.logout {}
+
+.routes li a,
+.logout {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
     color: white;
     text-decoration: none;
     transition: all .2s;
-    padding: 16px;
+    padding: 1em;
 }
 
-.routes li a:hover {
+.routes li a:hover,
+.logout:hover {
     color: rgb(194, 194, 194);
 }

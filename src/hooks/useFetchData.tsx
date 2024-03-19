@@ -6,7 +6,7 @@ import { api } from "../Apis/api";
 // Interfaces
 import { Clients } from "../interfaces/Clients";
 
-export const FetchData = (url: string) => {
+export const useFetchData = (url: string) => {
   const [data, setData] = useState<Clients[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");

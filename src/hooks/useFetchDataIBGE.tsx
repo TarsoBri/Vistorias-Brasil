@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { Regions } from "../interfaces/Regions";
 
-export const FetchDataIBGE = () => {
+export const useFetchDataIBGE = () => {
   const [data, setData] = useState<Regions[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");

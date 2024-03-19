@@ -1,6 +1,7 @@
 export interface Clients {
   _id?: string;
   email: string;
+  phone: string;
   password: string;
   firstName: string;
   status: boolean;
