@@ -9,6 +9,12 @@
         margin-block: 1em 2em;
     }
 
+
+    .link {
+        text-decoration: none;
+        color: white;
+    }
+
     .clients {
         margin-bottom: 2em;
         font-size: 12px;
