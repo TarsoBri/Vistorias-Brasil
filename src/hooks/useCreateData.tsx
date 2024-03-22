@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { useFetchData } from "./useFetchData";
 
+// interfaces
 import { Clients } from "../interfaces/Clients";
 
 // api
 import { api } from "../Apis/api";
-import { useNavigate } from "react-router-dom";
+
+// hooks
+import { useFetchData } from "./useFetchData";
 
 export const useCreateData = (url: string) => {
   const { setData } = useFetchData(url);
 
-  const navogate = useNavigate();
-
   const [loading, setLoading] = useState<boolean>(false);
+  const [sucess, setSucess] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const handleCreateClient = async (data: Clients) => {
@@ -22,11 +23,12 @@ export const useCreateData = (url: string) => {
       .post(url, data)
       .then((res) => {
         setData((prevData) => [...prevData, res.data]);
-        navogate("/");
+        setError("");
+        setSucess(true);
       })
       .catch((err) => setError(err.response.data))
       .finally(() => setLoading(false));
   };
 
-  return { handleCreateClient, loading, error };
+  return { handleCreateClient, sucess, loading, error };
 };

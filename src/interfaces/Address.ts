@@ -1,8 +1,8 @@
 export interface Address {
-  CEP: number;
+  CEP: string;
   state: string;
   city: string;
-  road: string;
+  road?: string;
   number?: number;
   reference?: string;
 }

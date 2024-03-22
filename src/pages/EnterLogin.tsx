@@ -1,5 +1,5 @@
-import styles from "./EnterLogin.module.css";
-import Enter from "../../components/EnterLogin/Enter";
+
+import Enter from "../components/EnterLogin/Enter";
 
 const EnterLogin = () => {
   return (

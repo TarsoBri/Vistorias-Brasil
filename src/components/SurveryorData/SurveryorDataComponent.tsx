@@ -1,28 +1,29 @@
-import styles from "./MyVistory.module.css";
+import styles from "./SurveryorDataComponent.module.css";
 
 // hooks
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import useAuthenticate from "../../hooks/useAuthenticate";
 import { useUpdateData } from "../../hooks/useUpdateData";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
+import { useFetchDataById } from "../../hooks/useFetchDataById";
 import { useNavigate } from "react-router-dom";
-
-// Interfaces
-import { Address } from "../../interfaces/Address";
-import { Clients } from "../../interfaces/Clients";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
 
-// Components
+// Interfaces
+import { Address } from "../../interfaces/Address";
+import { Clients } from "../../interfaces/Clients";
 import Loading from "../Loading/Loading";
 
-const MyVistoryComponent = () => {
-  const { user } = useAuthenticate();
-  const url = user && `/clients/${user._id}`;
+const SurveryorDataComponent = () => {
+  const { user: userAuth } = useAuthenticate();
+  const url: string = `/clients/${userAuth!._id}`;
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
 
   const navigate = useNavigate();
+
+  const { data: user, handleFetchById } = useFetchDataById(url);
 
   const {
     handleFetchIBGE,
@@ -30,7 +31,16 @@ const MyVistoryComponent = () => {
     loading: loadingStatesIBGE,
   } = useFetchDataIBGE();
 
-  const { handleUpdateData, loading, error, setError } = useUpdateData(url);
+  const { handleUpdateData, loading, error } = useUpdateData(url);
+
+  useEffect(() => {
+    handleFetchById();
+  }, [url]);
+
+  useEffect(() => {
+    handleFetchIBGE(urlStateIBGE);
+  }, [urlStateIBGE]);
+
   const initialAddressState: Address = {
     CEP: "",
     state: "",
@@ -48,11 +58,9 @@ const MyVistoryComponent = () => {
   const [phone, setPhone] = useState<string>("");
   const [status, setStatus] = useState<boolean | undefined>(false);
   const [address, setAddress] = useState<Address>(initialAddressState);
+  const [erroEmail, setErrorEmail] = useState<string>("");
 
-  useEffect(() => {
-    handleFetchIBGE(urlStateIBGE);
-  }, [urlStateIBGE]);
-
+  // set values inputs
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName);
@@ -97,6 +105,14 @@ const MyVistoryComponent = () => {
   const handleSubmitUpdateUser = (e: FormEvent) => {
     e.preventDefault();
 
+    window.scrollTo(0, 0);
+
+    if (email.includes("vistoriasbrasil")) {
+      setErrorEmail("");
+    } else {
+      return setErrorEmail("Email não qualificado!");
+    }
+
     const formData: Clients = {
       _id: user!._id,
       firstName,
@@ -111,8 +127,6 @@ const MyVistoryComponent = () => {
     handleUpdateData(formData);
 
     container_notification?.classList.remove("hide");
-
-    window.scrollTo(0, 0);
   };
 
   const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
@@ -145,40 +159,38 @@ const MyVistoryComponent = () => {
             <FaArrowLeftLong />
           </button>
         </div>
-        <h2>Sua vistoria atual</h2>
+        <h2>Dados do Vistoriador</h2>
       </div>
       <div id="notification" className="hide">
         <div className={styles.container_notification}>
-          <button onClick={() => container_notification?.classList.add("hide")}>
+          <button
+            onClick={() => {
+              container_notification?.classList.add("hide");
+            }}
+          >
             X
           </button>
           <p>Alterações salvas com sucesso!</p>
         </div>
       </div>
-
-      {error && (
+      {[error, erroEmail].filter(Boolean).length > 0 && (
         <div className={styles.container_notificationError}>
-          <button onClick={() => setError("")}>X</button>
-          <p>{error}</p>
+          {[error, erroEmail].filter(Boolean).map((err, index) => (
+            <>
+              <button onClick={() => setErrorEmail("")}>X</button>
+              <p key={index}>{err}</p>
+            </>
+          ))}
         </div>
       )}
-
       {!loading ? (
         <>
           {user && (
             <>
               <div className={styles.status}>
-                <p
-                  style={{
-                    color: user.status ? "rgb(45, 220, 15)" : "rgb(167, 0, 0)",
-                  }}
-                >
-                  <span>Status:</span>
-                  {user.status
-                    ? " Vistoria realizada!"
-                    : " Vistoria não realizada!"}
-                </p>
+                <p>Vistoriador</p>
               </div>
+
               <form className={styles.form} onSubmit={handleSubmitUpdateUser}>
                 <h3>Seus dados:</h3>
 
@@ -267,41 +279,6 @@ const MyVistoryComponent = () => {
                   />
                 </label>
 
-                <label>
-                  <span>Rua: </span>
-                  <input
-                    type="text"
-                    name="road"
-                    placeholder="Insira sua rua."
-                    required
-                    value={address.road}
-                    onChange={handleChangeUpdate}
-                  />
-                </label>
-
-                <label>
-                  <span>Número: </span>
-                  <input
-                    type="number"
-                    name="number"
-                    placeholder="Insira seu número."
-                    value={
-                      address.number && address.number > 0 ? address.number : ""
-                    }
-                    onChange={handleChangeUpdate}
-                  />
-                </label>
-
-                <label>
-                  <span>Referência: </span>
-                  <input
-                    type="text"
-                    name="reference"
-                    placeholder="Insira sua referência."
-                    value={address.reference}
-                    onChange={handleChangeUpdate}
-                  />
-                </label>
                 <div className={styles.div_update_btn}>
                   <div>
                     <p>Cadastrado: {user.created_at}</p>
@@ -325,4 +302,4 @@ const MyVistoryComponent = () => {
   );
 };
 
-export default MyVistoryComponent;
+export default SurveryorDataComponent;

@@ -1,8 +1,27 @@
 .clients_container {
+    max-width: 600px;
     width: 90vw;
-    max-width: 500px;
     margin-block: 2em 5em;
 
+    .filters {
+        margin-bottom: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        width: 100%;
+
+        label {
+            display: flex;
+            flex-direction: column;
+
+            select {
+                margin-top: 5px;
+                width: 200px;
+                padding: .5em;
+                font-size: 1em;
+            }
+        }
+    }
 
     h2 {
         text-align: center;
@@ -29,20 +48,32 @@
         transition: all .2s;
 
         .clients_left {
+            text-align: start;
             word-break: break-all;
 
-            h2 {
-                text-align: start;
-                margin: 0;
+            .clients_left_name {
+                display: flex;
+                flex-direction: column;
+
+
+                p {
+                    margin: 0;
+                }
+
+                h2 {
+                    text-align: start;
+                    margin: 0;
+                }
             }
         }
 
         .clients_rigth {
+            text-align: end;
 
             .status {
                 display: flex;
-                align-items: center;
                 font-size: 1.1em;
+                align-items: center;
             }
 
             .status span {
@@ -63,4 +94,21 @@
     font-size: 2em;
     justify-content: center;
     align-items: center;
+}
+
+@media (min-width: 600px) {
+    .clients_container {
+
+        .filters {
+            flex-direction: row;
+
+            label {
+
+                select {
+                    width: 170px;
+
+                }
+            }
+        }
+    }
 }

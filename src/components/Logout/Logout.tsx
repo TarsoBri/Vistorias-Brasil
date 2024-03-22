@@ -16,7 +16,15 @@ const Logout = () => {
         onClick={() => handleModalLogout(false)}
       ></div>
       <div className={styles.logout_container}>
-        <h3>Tem certeza que deseja sair, {user && user!.firstName}?</h3>
+        {user && user.surveyor !== true && (
+          <h3>{user.firstName}, tem certeza que deseja sair?</h3>
+        )}
+
+        {user && user.surveyor === true && (
+          <h3>
+            {user.firstName}, tem certeza que deseja sair como vistoriador?
+          </h3>
+        )}
         <button
           className="submit"
           onClick={() => {

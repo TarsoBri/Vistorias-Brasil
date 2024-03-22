@@ -1,5 +1,4 @@
-import ClientsList from "../../components/ClientsList/ClientsList";
-
+import ClientsList from "../components/ClientsList/ClientsList";
 const Home = () => {
   return (
     <div>

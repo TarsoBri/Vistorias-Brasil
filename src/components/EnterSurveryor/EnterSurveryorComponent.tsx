@@ -1,4 +1,4 @@
-import styles from "./Enter.module.css";
+import styles from "./EnterSurveryorComponent.module.css";
 
 //components
 import Loading from "../Loading/Loading";
@@ -7,7 +7,7 @@ import Loading from "../Loading/Loading";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useLoginUser } from "../../hooks/useLoginUser";
 
-const Enter = () => {
+const EnterSurveryorComponent = () => {
   const url = "/clients/login";
 
   const [email, setEmail] = useState<string>("");
@@ -41,7 +41,7 @@ const Enter = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Entrar para analisar vistoria</h2>
+      <h2>Entrar como Vistoriador</h2>
       <form className={styles.form} onSubmit={handleSubmit}>
         <label>
           <span>Email: </span>
@@ -85,4 +85,4 @@ const Enter = () => {
   );
 };
 
-export default Enter;
+export default EnterSurveryorComponent;

@@ -1,6 +1,6 @@
 import styles from "./MyVistory.module.css";
 
-import MyVistoryComponent from "../../components/MyVistory/MyVistoryComponent";
+import MyVistoryComponent from "../components/MyVistory/MyVistoryComponent";
 
 const MyVistory = () => {
   return (

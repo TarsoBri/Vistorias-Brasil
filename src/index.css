@@ -1,5 +1,6 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Noto Sans Lao Looped", Arial, Helvetica, sans-serif;
+  text-shadow: rgba(0, 0, 0, 0.409) 0.1em 0.1em 0.2em;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -9,16 +10,61 @@ body {
   overflow-x: hidden;
 }
 
+h2 {
+  text-shadow: rgba(0, 0, 0, 0.683) 0.1em 0.1em 0.2em;
+}
+
 .hide {
   display: none !important;
 }
 
 
+.container_erro {
+  background-color: #ff7272;
+  border-radius: 5px;
+  border: 2px solid red;
+  text-align: center;
 
+}
+
+
+.loading {
+  display: flex;
+  height: 50vh;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Buttons */
 
+/* return */
 
+.return_btn {
+  position: absolute;
+  top: 20px;
+  left: 0;
+}
+
+.return_btn button {
+  display: flex;
+  padding: .2em;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(94, 104, 177);
+  border-radius: 50%;
+  border: none;
+  color: rgb(255, 255, 255);
+  font-size: 2em;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.return_btn button:hover {
+  background-color: rgb(136, 142, 188);
+}
+
+/* submits */
 
 .submit,
 .button1,
@@ -51,4 +97,60 @@ body {
 
 .button1:hover {
   background-color: rgb(228, 228, 228);
+}
+
+
+/* CheckBox Styles */
+
+.toggler-wrapper {
+  display: block;
+  width: 45px;
+  height: 25px;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggler-wrapper input[type="checkbox"] {
+  display: none;
+}
+
+.toggler-wrapper input[type="checkbox"]:checked+.toggler-slider {
+  background-color: #44cc66;
+}
+
+.toggler-wrapper .toggler-slider {
+  background-color: #ccc;
+  position: absolute;
+  border-radius: 100px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.toggler-wrapper .toggler-knob {
+  position: absolute;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.toggler-wrapper.style-check input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+  left: calc(100% - 19px - 3px);
+}
+
+.toggler-wrapper.style-check .toggler-slider {
+  background-color: #eb4f37;
+}
+
+.toggler-wrapper.style-check .toggler-knob {
+  width: calc(25px - 6px);
+  height: calc(25px - 6px);
+  border-radius: 50%;
+  left: 3px;
+  top: 3px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
 }

@@ -1,4 +1,4 @@
-import styles from "./CreateClient.module.css";
+import styles from "./CreateSurveryor.module.css";
 
 // Interface
 import { Clients } from "../../interfaces/Clients";
@@ -14,7 +14,7 @@ import { useCreateData } from "../../hooks/useCreateData";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
 
-const CreateClient = () => {
+const CreateSurveryor = () => {
   const url: string = "/clients";
   const urlLogin: string = "/clients/login";
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
@@ -28,7 +28,6 @@ const CreateClient = () => {
     data: statesIBGE,
     loading: loadingStatesIBGE,
   } = useFetchDataIBGE();
-
   useEffect(() => {
     fetchStatesIBGE(urlStateIBGE);
   }, [urlStateIBGE]);
@@ -43,9 +42,6 @@ const CreateClient = () => {
     CEP: "",
     state: "",
     city: "",
-    road: "",
-    number: 0,
-    reference: "",
   };
 
   const [firstName, setFirstName] = useState<string>("");
@@ -56,6 +52,7 @@ const CreateClient = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const [errorPassword, setErrorPassword] = useState<string>("");
+  const [errorEmail, setErrorEmail] = useState<string>("");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -85,9 +82,6 @@ const CreateClient = () => {
         break;
       case "CEP":
       case "city":
-      case "road":
-      case "number":
-      case "reference":
         setAddress((prevAddress) => ({
           ...prevAddress,
           [name]: value,
@@ -101,6 +95,12 @@ const CreateClient = () => {
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (email.includes("vistoriasbrasil")) {
+      setErrorEmail("");
+    } else {
+      return setErrorEmail("Email não qualificado!");
+    }
+
     if (password !== confirmedPassword) {
       return setErrorPassword("Senhas diferentes!");
     } else {
@@ -108,6 +108,7 @@ const CreateClient = () => {
     }
 
     const formData: Clients = {
+      surveyor: true,
       firstName,
       password,
       email,
@@ -162,7 +163,7 @@ const CreateClient = () => {
 
   return (
     <div className={styles.form_div}>
-      <h2>Cadastrar vistoria para sua casa</h2>
+      <h2>Cadastrar vistoriador</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           <span>Nome: </span>
@@ -230,7 +231,7 @@ const CreateClient = () => {
           />
         </label>
 
-        <h3>Seu endereço:</h3>
+        <h3>Endereço do vistoriador:</h3>
 
         <label>
           <span>Cep: </span>
@@ -253,7 +254,7 @@ const CreateClient = () => {
             required
             value={address.state}
             onChange={handleChange}
-            disabled={loadingStatesIBGE && true}
+            disabled={loadingStatesIBGE ? true : false}
           >
             <option value="">Selecione seu estado.</option>
             {statesIBGE &&
@@ -286,51 +287,19 @@ const CreateClient = () => {
           </select>
         </label>
 
-        <label>
-          <span>Rua: </span>
-          <input
-            type="text"
-            name="road"
-            placeholder="Insira sua rua."
-            required
-            value={address.road}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-          <span>Número: </span>
-          <input
-            type="number"
-            name="number"
-            placeholder="Insira seu número."
-            value={address.number && address.number > 0 ? address.number : ""}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-          <span>Referência: </span>
-          <input
-            type="text"
-            name="reference"
-            placeholder="Insira sua referência."
-            value={address.reference}
-            onChange={handleChange}
-          />
-        </label>
-
         <button
           type="submit"
           className={!loading ? "submit" : "submit_loading"}
         >
           {!loading ? "Enviar" : <Loading />}
         </button>
-        {[error, errorPassword].filter(Boolean).length > 0 && (
+        {[error, errorPassword, errorEmail].filter(Boolean).length > 0 && (
           <div className="container_erro">
-            {[error, errorPassword].filter(Boolean).map((err, index) => (
-              <p key={index}>{err}</p>
-            ))}
+            {[error, errorPassword, errorEmail]
+              .filter(Boolean)
+              .map((err, index) => (
+                <p key={index}>{err}</p>
+              ))}
           </div>
         )}
       </form>
@@ -338,4 +307,4 @@ const CreateClient = () => {
   );
 };
 
-export default CreateClient;
+export default CreateSurveryor;

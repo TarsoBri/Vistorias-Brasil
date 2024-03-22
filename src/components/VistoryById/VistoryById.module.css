@@ -1,0 +1,55 @@
+.userData {
+    position: relative;
+    max-width: 600px;
+    width: 90vw;
+
+    .userData_header {
+        display: flex;
+        justify-content: center;
+
+        h2 {
+            margin-block: 3em 1.5em;
+        }
+    }
+
+    h3 {
+        margin: 0;
+    }
+
+
+
+    .status {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        font-size: 1.1em;
+    }
+
+    .status span {
+        color: white;
+    }
+
+    .userData_content {
+        display: flex;
+        gap: 2em;
+        flex-direction: column;
+        margin-bottom: 5em;
+        background-color: rgb(94, 104, 177);
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.377);
+        padding: 2em;
+        border-radius: 5px;
+
+        h3 {
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        p span {
+            color: rgb(0, 0, 0);
+            text-shadow: rgba(0, 0, 0, 0.144) 0.1em 0.1em 0.2em;
+        }
+    }
+}

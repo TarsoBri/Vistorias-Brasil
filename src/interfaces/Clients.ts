@@ -1,18 +1,19 @@
 export interface Clients {
   _id?: string;
+  surveyor?: boolean;
   email: string;
   phone: string;
   password: string;
   firstName: string;
-  status: boolean;
+  status?: boolean;
   address: {
-    CEP: number;
+    CEP: string;
     state: string;
     city: string;
-    road: string;
+    road?: string;
     number?: number;
     reference?: string;
   };
-  created_at?: Date;
-  update_at?: Date;
+  created_at?: string;
+  update_at?: string;
 }

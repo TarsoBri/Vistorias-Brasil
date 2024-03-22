@@ -1,6 +1,9 @@
 import styles from "./NavBar.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+
+// icon
+import { FaMosquito } from "react-icons/fa6";
 
 // context
 import useAuthenticate from "../../hooks/useAuthenticate";
@@ -11,18 +14,43 @@ const NavBar = () => {
   return (
     <nav className={styles.navbar}>
       <span className={styles.title}>
-        <Link to="/">Vistorias Brasil</Link>
+        <Link to="/">
+          Vistorias
+          <FaMosquito className={styles.icon} />
+          Brasil
+        </Link>
       </span>
 
       <ul className={styles.routes}>
+        {user && user.surveyor !== true && (
+          <li>
+            <NavLink to="/MyVistory">Minha vistoria</NavLink>
+          </li>
+        )}
+        {user && user.surveyor === true && (
+          <li>
+            <NavLink to="/SurveryorData">Seus dados</NavLink>
+          </li>
+        )}
+        {!user && (
+          <li>
+            <NavLink to="/Login">Entrar / Cadastrar</NavLink>
+          </li>
+        )}
         <li>
-          {user && <Link to="/MyVistory">Minha vistoria</Link>}
-          {!user && <Link to="/Login">Entrar / Cadastrar</Link>}
-          <Link to="/about">Sobre </Link>
-          {user && (
-            <button className={styles.logout} onClick={() => handleModalLogout(false)}>Sair</button>
-          )}
+          <NavLink to="/about">Sobre </NavLink>
         </li>
+
+        {user && (
+          <li>
+            <button
+              className={styles.logout}
+              onClick={() => handleModalLogout(false)}
+            >
+              Sair
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );

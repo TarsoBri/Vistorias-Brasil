@@ -1,31 +1,36 @@
-.container{
+.container {
+    position: relative;
+    max-width: 600px;
+    width: 90vw;
+}
+
+.userData_header {
+    display: flex;
+    justify-content: center;
+
+    h2 {
+        margin-block: 3em 1.5em;
+    }
+}
+
+
+.container_notification,
+.container_notificationError {
+    margin-bottom: 1em;
+    display: flex;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: solid rgb(0, 69, 0) 2px;
+    background-color: rgb(161, 255, 161);
     position: relative;
 
-    .userData_header {
-        display: flex;
-        justify-content: center;
-        
-        h2 {
-            margin-block: 3em 1.5em;
-        }
-    }
-    
-    .container_notification {
-        margin-bottom: 1em;
-        display: flex;
-        color: black;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        border: solid rgb(0, 69, 0) 2px;
-        background-color: rgb(161, 255, 161);
-        position: relative;
-        
     button {
         background-color: transparent;
         border: none;
         font-size: 1.2em;
-        color: rgb(0, 69, 0);
+        color: black;
         position: absolute;
         top: 0;
         left: 0;
@@ -33,9 +38,19 @@
         cursor: pointer;
         transition: all .2s;
     }
-    
+
     button:hover {
         color: rgb(0, 195, 0);
+    }
+}
+
+.container_notificationError {
+    background-color: rgb(245, 111, 111);
+    border: 2px solid red;
+
+
+    button:hover {
+        color: rgb(171, 0, 0);
     }
 }
 
@@ -48,7 +63,7 @@
     margin-left: 1em;
     border-radius: 20px 20px 0 0;
     font-size: .9em;
-    
+
     span {
         color: white;
     }
@@ -58,15 +73,13 @@
     display: flex;
     gap: 2em;
     flex-direction: column;
-    max-width: 400px;
-    width: 70vw;
     margin-bottom: 5em;
     background-color: rgb(94, 104, 177);
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.377);
-    
+
     padding: 2em;
     border-radius: 5px;
-    
+
     h3 {
         color: white;
         margin: 0;
@@ -78,7 +91,7 @@
         align-items: center;
         font-size: 1.2em;
         color: black;
-        
+
         input,
         select {
             margin-left: 5px;
@@ -91,29 +104,29 @@
             background-color: transparent;
             border: none;
             border-bottom: 1px solid white;
-            
+
             option {
                 font-size: .9em;
                 color: black;
             }
-            
+
         }
 
         input::placeholder {
             color: rgb(193, 192, 192);
         }
     }
-    
+
     .div_update_btn {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        
+
         p {
             color: rgba(255, 255, 255, 0.857);
             font-size: .8em;
         }
-        
+
         .update_btn {
             margin-left: 10px;
             color: white;
@@ -132,5 +145,4 @@
             background-color: rgb(107, 115, 170);
         }
     }
-}
 }
