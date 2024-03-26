@@ -31,6 +31,7 @@ const MyVistoryComponent = () => {
   } = useFetchDataIBGE();
 
   const { handleUpdateData, loading, error, setError } = useUpdateData(url);
+
   const initialAddressState: Address = {
     CEP: "",
     state: "",

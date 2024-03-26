@@ -6,22 +6,35 @@ const Register = () => {
     <div className={styles.container}>
       <div className={styles.login}>
         <div className={styles.adm}>
-          <h3>Cadastrar vistoriador</h3>
-          <Link to={"/RegisterSurveryor"}>Cadastrar</Link>
-          <p>Entrar como Vistoriador</p>
-          <Link to={"/EnterSurveryor"}>Entrar</Link>
+          <div>
+            <h3>Cadastrar vistoriador</h3>
+            <Link to={"/RegisterSurveryor"} className="submit">
+              Cadastrar
+            </Link>
+          </div>
+          <div>
+            <h3>Entrar como Vistoriador</h3>
+            <Link to={"/EnterSurveryor"} className="button1">
+              Entrar
+            </Link>
+          </div>
         </div>
 
         <div className={styles.divider}></div>
 
         <div className={styles.user}>
-          <h3>Cadastrar vistoria</h3>
-          <Link to={"/RegisterClient"}>Cadastrar</Link>
-
-          <p>Analisar vistoria</p>
-          <Link to={"/EnterLogin"} className="submit">
-            Entrar
-          </Link>
+          <div>
+            <h3>Cadastrar vistoria</h3>
+            <Link to={"/RegisterClient"} className="submit">
+              Cadastrar
+            </Link>
+          </div>
+          <div>
+            <h3>Analisar vistoria</h3>
+            <Link to={"/EnterLogin"} className="button1">
+              Entrar
+            </Link>
+          </div>
         </div>
       </div>
     </div>

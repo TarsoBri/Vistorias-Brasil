@@ -5,7 +5,6 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import useAuthenticate from "../../hooks/useAuthenticate";
 import { useUpdateData } from "../../hooks/useUpdateData";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
-import { useFetchDataById } from "../../hooks/useFetchDataById";
 import { useNavigate } from "react-router-dom";
 
 // icons
@@ -17,13 +16,11 @@ import { Clients } from "../../interfaces/Clients";
 import Loading from "../Loading/Loading";
 
 const SurveryorDataComponent = () => {
-  const { user: userAuth } = useAuthenticate();
-  const url: string = `/clients/${userAuth!._id}`;
+  const { user } = useAuthenticate();
+  const url: string = `/clients/${user!._id}`;
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
 
   const navigate = useNavigate();
-
-  const { data: user, handleFetchById } = useFetchDataById(url);
 
   const {
     handleFetchIBGE,
@@ -32,10 +29,6 @@ const SurveryorDataComponent = () => {
   } = useFetchDataIBGE();
 
   const { handleUpdateData, loading, error } = useUpdateData(url);
-
-  useEffect(() => {
-    handleFetchById();
-  }, [url]);
 
   useEffect(() => {
     handleFetchIBGE(urlStateIBGE);
@@ -159,7 +152,7 @@ const SurveryorDataComponent = () => {
             <FaArrowLeftLong />
           </button>
         </div>
-        <h2>Dados do Vistoriador</h2>
+        <h2>Seus dados como Vistorador</h2>
       </div>
       <div id="notification" className="hide">
         <div className={styles.container_notification}>

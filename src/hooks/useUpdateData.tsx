@@ -10,7 +10,6 @@ import useAuthenticate from "./useAuthenticate";
 export const useUpdateData = (url: string | undefined) => {
   const { user, setUser } = useAuthenticate();
 
-  const [update, setUpdate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -20,7 +19,6 @@ export const useUpdateData = (url: string | undefined) => {
       await api
         .patch(url, data)
         .then((res) => {
-          setUpdate(!update);
           if (user && user._id === data._id) {
             setUser(res.data);
           }
@@ -30,5 +28,5 @@ export const useUpdateData = (url: string | undefined) => {
     }
   };
 
-  return { handleUpdateData, update, error, setError, loading };
+  return { handleUpdateData, error, setError, loading };
 };

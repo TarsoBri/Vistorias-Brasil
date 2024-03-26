@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Components
 import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer";
 import Logout from "./components/Logout/Logout";
 
 // Pages
@@ -87,6 +88,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </BrowserRouter>
   );

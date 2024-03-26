@@ -2,9 +2,7 @@ body {
   font-family: "Noto Sans Lao Looped", Arial, Helvetica, sans-serif;
   text-shadow: rgba(0, 0, 0, 0.409) 0.1em 0.1em 0.2em;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: rgb(39, 42, 61);
   color: white;
   overflow-x: hidden;
@@ -69,9 +67,12 @@ h2 {
 .submit,
 .button1,
 .submit_loading {
+  text-shadow: none;
   color: white;
+  text-decoration: none;
   background-color: rgb(130, 143, 240);
-  height: 40px;
+  padding: .5em 2em;
+  align-items: center;
   font-size: 1em;
   border-radius: 5px;
   border: none;

@@ -15,14 +15,14 @@ export const useLoginUser = (url: string) => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { user, setUser: setUserAuth } = useAuthenticate();
+  const { user, setKeyToken } = useAuthenticate();
 
   const handleLoginUser = async (data: Login) => {
     setLoading(true);
     await api
       .post(url, data)
       .then((res) => {
-        setUserAuth(res.data);
+        setKeyToken(res.data);
         navigate("/");
       })
       .catch((err) => setError(err.response.data))

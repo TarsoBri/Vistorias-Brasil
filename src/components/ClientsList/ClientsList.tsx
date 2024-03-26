@@ -150,11 +150,14 @@ const ClientsList = () => {
                         </div>
                       </Link>
                     ) : (
-                      <div key={user._id} className={styles.clients}>
+                      <div className={styles.clients}>
                         <div className={styles.clients_left}>
-                          <h2>Nome: {user.firstName}</h2>
+                          <div className={styles.clients_left_name}>
+                            <p>Vistoria de:</p>
+                            <h2>{user.firstName}</h2>
+                          </div>
                           <p>
-                            {user.address.city} - {user.address.state}
+                            Local: {user.address.city} - {user.address.state}
                           </p>
                         </div>
                         <div className={styles.clients_rigth}>

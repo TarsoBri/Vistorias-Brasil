@@ -11,6 +11,7 @@ const EnterSurveryorComponent = () => {
   const url = "/clients/login";
 
   const [email, setEmail] = useState<string>("");
+  const [emailErro, setEmailErro] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const { handleLoginUser, loading, error } = useLoginUser(url);
@@ -31,6 +32,9 @@ const EnterSurveryorComponent = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    if (!email.includes("vistoriasbrasil")) {
+      return setEmailErro("Email não qualificado!");
+    } else setEmailErro("");
     const loginUser = {
       email,
       password,
@@ -75,9 +79,11 @@ const EnterSurveryorComponent = () => {
         >
           {!loading ? "Enviar" : <Loading />}
         </button>
-        {error && (
+        {[error, emailErro].filter(Boolean).length > 0 && (
           <div className="container_erro">
-            <p>{error}</p>
+            {[error, emailErro].filter(Boolean).map((err, index) => (
+              <p key={index}>{err}</p>
+            ))}
           </div>
         )}
       </form>

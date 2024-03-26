@@ -6,8 +6,8 @@ const useAuthenticate = () => {
   if (!context) {
     throw new Error("O contexto não está disponível!");
   }
-  const { user, setUser, handleModalLogout } = context;
-  return { user, setUser, handleModalLogout };
+  const { user, setUser, handleModalLogout, keyToken, setKeyToken } = context;
+  return { user, setUser, handleModalLogout, keyToken, setKeyToken };
 };
 
 export default useAuthenticate;
