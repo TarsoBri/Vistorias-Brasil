@@ -1,15 +1,21 @@
 import styles from "./NavBar.module.css";
 
+import { useState } from "react";
+
 import { Link, NavLink } from "react-router-dom";
 
-// icon
+// icons
 import { FaMosquito } from "react-icons/fa6";
+import { MdMenuOpen } from "react-icons/md";
 
 // context
 import useAuthenticate from "../../hooks/useAuthenticate";
 
 const NavBar = () => {
   const { user, handleModalLogout } = useAuthenticate();
+  const [active, setActive] = useState<boolean>(false);
+
+  const menuFunc = () => setActive(!active);
 
   return (
     <nav className={styles.navbar}>
@@ -21,37 +27,50 @@ const NavBar = () => {
         </Link>
       </span>
 
-      <ul className={styles.routes}>
-        {user && user.surveyor !== true && (
-          <li>
-            <NavLink to="/MyVistory">Minha vistoria</NavLink>
-          </li>
-        )}
-        {user && user.surveyor === true && (
-          <li>
-            <NavLink to="/SurveryorData">Seus dados</NavLink>
-          </li>
-        )}
-        {!user && (
-          <li>
-            <NavLink to="/Login">Entrar / Cadastrar</NavLink>
-          </li>
-        )}
-        <li>
-          <NavLink to="/about">Sobre </NavLink>
-        </li>
+      <div className={active ? styles.active : ""}>
+        <div className={styles.menu_icon} onClick={menuFunc}>
+          <MdMenuOpen />
+        </div>
 
-        {user && (
-          <li>
-            <button
-              className={styles.logout}
-              onClick={() => handleModalLogout(false)}
-            >
-              Sair
-            </button>
+        <ul className={styles.routes}>
+          <li onClick={menuFunc}>
+            <NavLink to="/">Início</NavLink>
           </li>
-        )}
-      </ul>
+          {user && user.surveyor !== true && (
+            <li onClick={menuFunc}>
+              <NavLink to="/MyVistory">Minha vistoria</NavLink>
+            </li>
+          )}
+          {user && user.surveyor === true && (
+            <li onClick={menuFunc}>
+              <NavLink to="/SurveryorData">Seus dados</NavLink>
+            </li>
+          )}
+          {!user && (
+            <li onClick={menuFunc}>
+              <NavLink to="/Login">Entrar / Cadastrar</NavLink>
+            </li>
+          )}
+          <li onClick={menuFunc}>
+            <NavLink to="/about">Sobre</NavLink>
+          </li>
+
+          <li onClick={menuFunc}>
+            <NavLink to="/contact">Contato</NavLink>
+          </li>
+
+          {user && (
+            <li onClick={menuFunc}>
+              <button
+                className={styles.logout}
+                onClick={() => handleModalLogout(false)}
+              >
+                Sair
+              </button>
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 };

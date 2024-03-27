@@ -163,7 +163,7 @@ const CreateSurveryor = () => {
 
   return (
     <div className={styles.form_div}>
-      <h2>Cadastrar vistoriador</h2>
+      <h2>Cadastrar novo vistoriador</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           <span>Nome: </span>

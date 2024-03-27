@@ -1,11 +1,10 @@
 .container {
     width: 70vw;
     max-width: 400px;
-    margin-block: 7em 3em;
-
     h2 {
         text-align: center;
     }
+
 
     .form {
         display: flex;

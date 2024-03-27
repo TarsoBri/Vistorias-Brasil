@@ -1,9 +1,9 @@
-import EnterSurveryorComponent from "../components/EnterSurveryor/EnterSurveryorComponent";
+import EnterComponent from "../components/EnterComponent/EnterComponent";
 
 const EnterSurveryor = () => {
   return (
     <div>
-      <EnterSurveryorComponent />
+      <EnterComponent title="Entrar como Vistoriador" />
     </div>
   );
 };

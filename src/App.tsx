@@ -21,6 +21,7 @@ import MyVistory from "./pages/MyVistory";
 import SurveryorData from "./pages/SurveryorData";
 import EnterSurveryor from "./pages/EnterSurveryor";
 import Vistory from "./pages/Vistory";
+import About from "./pages/About";
 
 const App = () => {
   const { user } = useAuthenticate();
@@ -33,6 +34,8 @@ const App = () => {
         <div className="container">
           <Routes>
             <Route path="/" element={<Home />} />
+
+            <Route path="/about" element={<About />} />
 
             {user && user.surveyor !== true ? (
               <Route path="/MyVistory" element={<MyVistory />} />

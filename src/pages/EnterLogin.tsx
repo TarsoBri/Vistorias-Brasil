@@ -1,10 +1,9 @@
-
-import Enter from "../components/EnterLogin/Enter";
+import EnterComponent from "../components/EnterComponent/EnterComponent";
 
 const EnterLogin = () => {
   return (
     <div>
-      <Enter />
+      <EnterComponent title="Entrar como usuário" />
     </div>
   );
 };

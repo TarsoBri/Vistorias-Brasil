@@ -7,7 +7,7 @@ const Register = () => {
       <div className={styles.login}>
         <div className={styles.adm}>
           <div>
-            <h3>Cadastrar vistoriador</h3>
+            <h3>Cadastrei um novo vistoriador</h3>
             <Link to={"/RegisterSurveryor"} className="submit">
               Cadastrar
             </Link>
@@ -24,7 +24,7 @@ const Register = () => {
 
         <div className={styles.user}>
           <div>
-            <h3>Cadastrar vistoria</h3>
+            <h3>Cadastreie uma nova vistoria</h3>
             <Link to={"/RegisterClient"} className="submit">
               Cadastrar
             </Link>
