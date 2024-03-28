@@ -1,9 +1,19 @@
 import styles from "./Register.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+// icons
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.container}>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
+      </div>
       <div className={styles.login}>
         <div className={styles.adm}>
           <div>

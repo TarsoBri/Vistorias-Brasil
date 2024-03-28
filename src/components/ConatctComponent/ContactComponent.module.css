@@ -1,0 +1,69 @@
+.container {
+    width: 90vw;
+    max-width: 600px;
+    text-align: center;
+
+    h2 {
+        margin-block: 1.5em;
+    }
+
+    p {
+        padding-inline: 1em;
+        text-align: start;
+    }
+
+    .networks {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+
+        margin-bottom: 5em;
+        gap: 1em;
+
+        li a {
+            color: white;
+            font-size: 2em;
+            text-decoration: none;
+            transition: all .2s;
+        }
+
+        li a:hover {
+            color: rgb(99, 99, 187);
+        }
+    }
+
+    .myData {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+
+        li {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+
+            span {
+                font-size: 1.3em;
+                margin: 7px 5px 0 0;
+            }
+        }
+    }
+}
+
+@media (min-width: 600px) {
+    .container {
+        .myData {
+            gap: 2em;
+            flex-direction: row;
+        }
+    }
+
+
+}

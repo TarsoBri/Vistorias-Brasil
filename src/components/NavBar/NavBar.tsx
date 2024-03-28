@@ -52,11 +52,11 @@ const NavBar = () => {
             </li>
           )}
           <li onClick={menuFunc}>
-            <NavLink to="/about">Sobre</NavLink>
+            <NavLink to="/About">Sobre</NavLink>
           </li>
 
           <li onClick={menuFunc}>
-            <NavLink to="/contact">Contato</NavLink>
+            <NavLink to="/Contact">Contato</NavLink>
           </li>
 
           {user && (

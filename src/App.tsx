@@ -22,6 +22,7 @@ import SurveryorData from "./pages/SurveryorData";
 import EnterSurveryor from "./pages/EnterSurveryor";
 import Vistory from "./pages/Vistory";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const App = () => {
   const { user } = useAuthenticate();
@@ -35,7 +36,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
 
-            <Route path="/about" element={<About />} />
+            <Route path="/About" element={<About />} />
+
+            <Route path="/Contact" element={<Contact />} />
 
             {user && user.surveyor !== true ? (
               <Route path="/MyVistory" element={<MyVistory />} />

@@ -1,12 +1,15 @@
 .form_div {
-    width: 70vw;
-    max-width: 500px;
+    width: 90vw;
+    max-width: 600px;
 
     h2 {
         text-align: center;
+        margin-block: 1.5;
     }
 
     .form {
+        margin: auto;
+        max-width: 400px;
         display: flex;
         gap: 2em;
         flex-direction: column;
@@ -22,6 +25,11 @@
 
             span {
                 margin-bottom: 10px;
+
+                .mandatoryInput {
+                    color: rgb(203, 0, 0);
+                    margin-inline: 2px;
+                }
             }
 
             input,

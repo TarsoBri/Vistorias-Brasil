@@ -53,14 +53,12 @@ const VistoryByID = ({ id }: Props) => {
             <>
               {user && (
                 <div className={styles.userData}>
-                  <div className={styles.userData_header}> 
-                    <div className="return_btn">
-                      <button onClick={() => navigate(-1)}>
-                        <FaArrowLeftLong />
-                      </button>
-                    </div>
-                    <h2>Vistoria de {user.firstName}</h2>
+                  <div className="return_btn">
+                    <button onClick={() => navigate(-1)}>
+                      <FaArrowLeftLong />
+                    </button>
                   </div>
+                  <h2>Vistoria de {user.firstName}</h2>
                   <h3>Status de vistoria:</h3>
                   <div className={styles.status}>
                     <label className="toggler-wrapper style-check">

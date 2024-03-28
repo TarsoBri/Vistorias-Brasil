@@ -54,21 +54,27 @@
         .clients_left {
             text-align: start;
             word-break: break-all;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
 
-            .clients_left_name {
+            .clients_left_name,
+            .clients_left_local {
                 display: flex;
                 flex-direction: column;
-
 
                 p {
                     margin: 0;
                 }
 
-                h2 {
+                h3 {
                     text-align: start;
                     margin: 0;
+                    font-size: 1.2em;
                 }
             }
+
+
         }
 
         .clients_rigth {

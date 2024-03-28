@@ -8,16 +8,22 @@ import { Login } from "../../interfaces/Login";
 // Components
 import Loading from "../Loading/Loading";
 
+// icons
+import { FaArrowLeftLong } from "react-icons/fa6";
+
 // hooks
 import { useState, ChangeEvent, useEffect } from "react";
 import { useCreateData } from "../../hooks/useCreateData";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
+import { useNavigate } from "react-router-dom";
 
 const CreateClient = () => {
   const url: string = "/clients";
   const urlLogin: string = "/clients/login";
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
+
+  const navigate = useNavigate();
 
   const { handleCreateClient, sucess, loading, error } = useCreateData(url);
 
@@ -162,10 +168,17 @@ const CreateClient = () => {
 
   return (
     <div className={styles.form_div}>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
+      </div>
       <h2>Cadastrar vistoria para sua casa</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
-          <span>Nome: </span>
+          <span>
+            Nome<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="text"
             name="firstName"
@@ -177,7 +190,9 @@ const CreateClient = () => {
         </label>
 
         <label>
-          <span>Email: </span>
+          <span>
+            Email<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="email"
             name="email"
@@ -190,7 +205,9 @@ const CreateClient = () => {
         </label>
 
         <label>
-          <span>Telefone: </span>
+          <span>
+            Telefone<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="text"
             value={phone}
@@ -203,7 +220,9 @@ const CreateClient = () => {
         </label>
 
         <label>
-          <span>Senha: </span>
+          <span>
+            Senha<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="password"
             name="password"
@@ -217,7 +236,9 @@ const CreateClient = () => {
         </label>
 
         <label>
-          <span>Confirmar senha: </span>
+          <span>
+            Confirmar senha<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="password"
             name="confirmedPassword"
@@ -233,7 +254,9 @@ const CreateClient = () => {
         <h3>Seu endereço:</h3>
 
         <label>
-          <span>Cep: </span>
+          <span>
+            Cep<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="text"
             name="CEP"
@@ -247,7 +270,9 @@ const CreateClient = () => {
         </label>
 
         <label>
-          <span>Estado: </span>
+          <span>
+            Estado<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <select
             name="state"
             required
@@ -266,7 +291,9 @@ const CreateClient = () => {
         </label>
 
         <label>
-          <span>Cidade: </span>
+          <span>
+            Cidade<span className={styles.mandatoryInput}>*</span>:{" "}
+          </span>
           <select
             name="city"
             required

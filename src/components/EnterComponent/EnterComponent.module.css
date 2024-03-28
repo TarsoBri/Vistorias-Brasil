@@ -1,12 +1,16 @@
 .container {
-    width: 70vw;
-    max-width: 400px;
+    width: 90vw;
+    max-width: 600px;
+
     h2 {
+        margin-block: 1.5em;
         text-align: center;
     }
 
 
     .form {
+        margin: auto;
+        max-width: 400px;
         display: flex;
         gap: 2em;
         flex-direction: column;

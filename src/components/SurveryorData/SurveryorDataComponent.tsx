@@ -146,14 +146,13 @@ const SurveryorDataComponent = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.userData_header}>
-        <div className="return_btn">
-          <button onClick={() => navigate(-1)}>
-            <FaArrowLeftLong />
-          </button>
-        </div>
-        <h2>Seus dados como Vistorador</h2>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
       </div>
+      <h2>Seus dados como Vistorador</h2>
+
       <div id="notification" className="hide">
         <div className={styles.container_notification}>
           <button
@@ -275,7 +274,7 @@ const SurveryorDataComponent = () => {
                 <div className={styles.div_update_btn}>
                   <div>
                     <p>Cadastrado: {user.created_at}</p>
-                    <p>Editado: {user.update_at}</p>
+                    {user.update_at && <p>Editado: {user.update_at}</p>}
                   </div>
 
                   <button type="submit" className={styles.update_btn}>

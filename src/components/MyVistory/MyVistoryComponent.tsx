@@ -140,14 +140,12 @@ const MyVistoryComponent = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.userData_header}>
-        <div className="return_btn">
-          <button onClick={() => navigate(-1)}>
-            <FaArrowLeftLong />
-          </button>
-        </div>
-        <h2>Sua vistoria atual</h2>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
       </div>
+      <h2>Sua vistoria atual</h2>
       <div id="notification" className="hide">
         <div className={styles.container_notification}>
           <button onClick={() => container_notification?.classList.add("hide")}>
@@ -306,7 +304,7 @@ const MyVistoryComponent = () => {
                 <div className={styles.div_update_btn}>
                   <div>
                     <p>Cadastrado: {user.created_at}</p>
-                    <p>Editado: {user.update_at}</p>
+                    {user.update_at && <p>Editado: {user.update_at}</p>}
                   </div>
 
                   <button type="submit" className={styles.update_btn}>

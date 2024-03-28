@@ -3,16 +3,21 @@ import styles from "./EnterComponent.module.css";
 //components
 import Loading from "../Loading/Loading";
 
+// icons
+import { FaArrowLeftLong } from "react-icons/fa6";
+
 // hooks
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useLoginUser } from "../../hooks/useLoginUser";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
-  title: string;
+  typeUser: string;
 }
 
-const EnterComponent = ({ title }: Props) => {
+const EnterComponent = ({ typeUser }: Props) => {
   const url = "/clients/login";
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
   const [emailErro, setEmailErro] = useState<string>("");
@@ -36,9 +41,11 @@ const EnterComponent = ({ title }: Props) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!email.includes("vistoriasbrasil")) {
-      return setEmailErro("Email não qualificado!");
-    } else setEmailErro("");
+    if (typeUser === "surveryor") {
+      if (!email.includes("vistoriasbrasil")) {
+        return setEmailErro("Email não qualificado!");
+      } else setEmailErro("");
+    }
     const loginUser = {
       email,
       password,
@@ -49,7 +56,16 @@ const EnterComponent = ({ title }: Props) => {
 
   return (
     <div className={styles.container}>
-      <h2>{title}</h2>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
+      </div>
+      <h2>
+        {typeUser === "surveryor"
+          ? "Entrar como Vistoriador"
+          : "Entrar para ver vistoria"}
+      </h2>
       <form className={styles.form} onSubmit={handleSubmit}>
         <label>
           <span>Email: </span>

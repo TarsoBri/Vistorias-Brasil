@@ -124,11 +124,14 @@ const ClientsList = () => {
                           <div className={styles.clients_left}>
                             <div className={styles.clients_left_name}>
                               <p>Vistoria de:</p>
-                              <h2>{user.firstName}</h2>
+                              <h3>{user.firstName}</h3>
                             </div>
-                            <p>
-                              Local: {user.address.city} - {user.address.state}
-                            </p>
+                            <div className={styles.clients_left_local}>
+                              <p>Local:</p>
+                              <p>
+                                {user.address.city} - {user.address.state}
+                              </p>
+                            </div>
                           </div>
                           <div className={styles.clients_rigth}>
                             <div className={styles.status}>
@@ -154,11 +157,14 @@ const ClientsList = () => {
                         <div className={styles.clients_left}>
                           <div className={styles.clients_left_name}>
                             <p>Vistoria de:</p>
-                            <h2>{user.firstName}</h2>
+                            <h3>{user.firstName}</h3>
                           </div>
-                          <p>
-                            Local: {user.address.city} - {user.address.state}
-                          </p>
+                          <div className={styles.clients_left_local}>
+                            <p>Local:</p>
+                            <p>
+                              {user.address.city} - {user.address.state}
+                            </p>
+                          </div>
                         </div>
                         <div className={styles.clients_rigth}>
                           <div className={styles.status}>

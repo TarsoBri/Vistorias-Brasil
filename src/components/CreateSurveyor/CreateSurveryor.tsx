@@ -5,6 +5,9 @@ import { Clients } from "../../interfaces/Clients";
 import { Address } from "../../interfaces/Address";
 import { Login } from "../../interfaces/Login";
 
+// icons
+import { FaArrowLeftLong } from "react-icons/fa6";
+
 // Components
 import Loading from "../Loading/Loading";
 
@@ -13,11 +16,14 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { useCreateData } from "../../hooks/useCreateData";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
+import { useNavigate } from "react-router-dom";
 
 const CreateSurveryor = () => {
   const url: string = "/clients";
   const urlLogin: string = "/clients/login";
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
+
+  const navigate = useNavigate();
 
   const { handleCreateClient, sucess, loading, error } = useCreateData(url);
 
@@ -163,10 +169,17 @@ const CreateSurveryor = () => {
 
   return (
     <div className={styles.form_div}>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
+      </div>
       <h2>Cadastrar novo vistoriador</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label>
-          <span>Nome: </span>
+          <span>
+            Nome<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="text"
             name="firstName"
@@ -178,7 +191,9 @@ const CreateSurveryor = () => {
         </label>
 
         <label>
-          <span>Email: </span>
+          <span>
+            Email<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="email"
             name="email"
@@ -191,7 +206,9 @@ const CreateSurveryor = () => {
         </label>
 
         <label>
-          <span>Telefone: </span>
+          <span>
+            Telefone<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="text"
             value={phone}
@@ -204,7 +221,9 @@ const CreateSurveryor = () => {
         </label>
 
         <label>
-          <span>Senha: </span>
+          <span>
+            Senha<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="password"
             name="password"
@@ -218,7 +237,9 @@ const CreateSurveryor = () => {
         </label>
 
         <label>
-          <span>Confirmar senha: </span>
+          <span>
+            Confirmar senha<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="password"
             name="confirmedPassword"
@@ -234,7 +255,9 @@ const CreateSurveryor = () => {
         <h3>Endereço do vistoriador:</h3>
 
         <label>
-          <span>Cep: </span>
+          <span>
+            Cep<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <input
             type="text"
             name="CEP"
@@ -248,7 +271,9 @@ const CreateSurveryor = () => {
         </label>
 
         <label>
-          <span>Estado: </span>
+          <span>
+            Estado<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <select
             name="state"
             required
@@ -267,7 +292,9 @@ const CreateSurveryor = () => {
         </label>
 
         <label>
-          <span>Cidade: </span>
+          <span>
+            Cidade<span className={styles.mandatoryInput}>*</span>:
+          </span>
           <select
             name="city"
             required

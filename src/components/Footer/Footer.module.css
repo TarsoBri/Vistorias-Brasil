@@ -25,11 +25,50 @@
         }
     }
 
-    .logo a:hover {
-        color: rgb(156, 156, 194);
+    .myData {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
 
-        .icon {
-            color: rgb(83, 83, 140);
+        li {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+
+            p {
+                font-size: .8em;
+            }
+
+            span {
+                font-size: 1em;
+                margin: 5px 5px 0 0;
+            }
         }
     }
+}
+
+
+.logo a:hover {
+    color: rgb(156, 156, 194);
+
+    .icon {
+        color: rgb(83, 83, 140);
+    }
+}
+
+
+@media (min-width: 600px) {
+    .footer {
+        .myData {
+            gap: 2em;
+            flex-direction: row;
+        }
+    }
+
+
 }

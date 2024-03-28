@@ -3,6 +3,11 @@
     width: 90vw;
     text-align: center;
 
+    h2 {
+        margin-block: 1.5em;
+    }
+
+
     p {
         text-align: start;
         margin-block: 3em 1em;

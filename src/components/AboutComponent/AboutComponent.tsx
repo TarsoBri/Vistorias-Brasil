@@ -1,9 +1,14 @@
 import styles from "./AboutComponent.module.css";
 
+import { useNavigate } from "react-router-dom";
+
 // icon
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const AboutComponent = () => {
+  const navigate = useNavigate();
+
   const questionsArticle = document.getElementsByClassName(
     `${styles.question_container}`
   );
@@ -15,6 +20,12 @@ const AboutComponent = () => {
 
   return (
     <div className={styles.container}>
+      <div className="return_btn">
+        <button onClick={() => navigate(-1)}>
+          <FaArrowLeftLong />
+        </button>
+      </div>
+
       <h2>Sobre o Vistoria Brasil</h2>
       <p>Conheça sobre o projeto vendo essas perguntas recentes</p>
 
