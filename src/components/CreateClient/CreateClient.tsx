@@ -10,6 +10,8 @@ import Loading from "../Loading/Loading";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 // hooks
 import { useState, ChangeEvent, useEffect } from "react";
@@ -62,6 +64,10 @@ const CreateClient = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const [errorPassword, setErrorPassword] = useState<string>("");
+
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [confirmedPasswordVisibility, setConfirmedPasswordVisibility] =
+    useState(false);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -223,32 +229,47 @@ const CreateClient = () => {
           <span>
             Senha<span className={styles.mandatoryInput}>*</span>:
           </span>
-          <input
-            type="password"
-            name="password"
-            placeholder="Insira sua senha."
-            required
-            value={password}
-            minLength={8}
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
+          <div className={styles.password_input}>
+            <input
+              type={passwordVisibility ? "text" : "password"}
+              name="password"
+              placeholder="Insira sua senha."
+              required
+              value={password}
+              autoComplete="current-password"
+              minLength={8}
+              onChange={handleChange}
+            />
+
+            <span onClick={() => setPasswordVisibility(!passwordVisibility)}>
+              {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
         </label>
 
         <label>
           <span>
             Confirmar senha<span className={styles.mandatoryInput}>*</span>:
           </span>
-          <input
-            type="password"
-            name="confirmedPassword"
-            placeholder="Confirme sua senha."
-            required
-            value={confirmedPassword}
-            minLength={8}
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
+          <div className={styles.password_input}>
+            <input
+              type={confirmedPasswordVisibility ? "text" : "password"}
+              name="confirmedPassword"
+              placeholder="Confirme sua senha."
+              required
+              value={confirmedPassword}
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+
+            <span
+              onClick={() =>
+                setConfirmedPasswordVisibility(!confirmedPasswordVisibility)
+              }
+            >
+              {confirmedPasswordVisibility ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
         </label>
 
         <h3>Seu endereço:</h3>

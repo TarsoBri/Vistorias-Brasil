@@ -7,6 +7,8 @@ import { Login } from "../../interfaces/Login";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 // Components
 import Loading from "../Loading/Loading";
@@ -49,7 +51,6 @@ const CreateSurveryor = () => {
     state: "",
     city: "",
   };
-
   const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -60,6 +61,9 @@ const CreateSurveryor = () => {
   const [errorPassword, setErrorPassword] = useState<string>("");
   const [errorEmail, setErrorEmail] = useState<string>("");
 
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [confirmedPasswordVisibility, setConfirmedPasswordVisibility] =
+    useState(false);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
   ) => {
@@ -189,7 +193,6 @@ const CreateSurveryor = () => {
             onChange={handleChange}
           />
         </label>
-
         <label>
           <span>
             Email<span className={styles.mandatoryInput}>*</span>:
@@ -204,7 +207,6 @@ const CreateSurveryor = () => {
             onChange={handleChange}
           />
         </label>
-
         <label>
           <span>
             Telefone<span className={styles.mandatoryInput}>*</span>:
@@ -224,36 +226,50 @@ const CreateSurveryor = () => {
           <span>
             Senha<span className={styles.mandatoryInput}>*</span>:
           </span>
-          <input
-            type="password"
-            name="password"
-            placeholder="Insira sua senha."
-            required
-            value={password}
-            minLength={8}
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
+          <div className={styles.password_input}>
+            <input
+              type={passwordVisibility ? "text" : "password"}
+              name="password"
+              placeholder="Insira sua senha."
+              required
+              value={password}
+              autoComplete="current-password"
+              minLength={8}
+              onChange={handleChange}
+            />
+
+            <span onClick={() => setPasswordVisibility(!passwordVisibility)}>
+              {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
         </label>
 
         <label>
           <span>
             Confirmar senha<span className={styles.mandatoryInput}>*</span>:
           </span>
-          <input
-            type="password"
-            name="confirmedPassword"
-            placeholder="Confirme sua senha."
-            required
-            value={confirmedPassword}
-            minLength={8}
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
+          <div className={styles.password_input}>
+            <input
+              type={confirmedPasswordVisibility ? "text" : "password"}
+              name="confirmedPassword"
+              placeholder="Confirme sua senha."
+              required
+              value={confirmedPassword}
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+
+            <span
+              onClick={() =>
+                setConfirmedPasswordVisibility(!confirmedPasswordVisibility)
+              }
+            >
+              {confirmedPasswordVisibility ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
         </label>
 
         <h3>Endereço do vistoriador:</h3>
-
         <label>
           <span>
             Cep<span className={styles.mandatoryInput}>*</span>:
@@ -269,7 +285,6 @@ const CreateSurveryor = () => {
             maxLength={8}
           />
         </label>
-
         <label>
           <span>
             Estado<span className={styles.mandatoryInput}>*</span>:
@@ -290,7 +305,6 @@ const CreateSurveryor = () => {
               ))}
           </select>
         </label>
-
         <label>
           <span>
             Cidade<span className={styles.mandatoryInput}>*</span>:
@@ -313,7 +327,6 @@ const CreateSurveryor = () => {
               ))}
           </select>
         </label>
-
         <button
           type="submit"
           className={!loading ? "submit" : "submit_loading"}

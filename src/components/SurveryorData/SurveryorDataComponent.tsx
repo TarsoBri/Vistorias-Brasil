@@ -15,6 +15,11 @@ import { Address } from "../../interfaces/Address";
 import { Clients } from "../../interfaces/Clients";
 import Loading from "../Loading/Loading";
 
+interface PasswordData {
+  password: string;
+  newPassword: string;
+}
+
 const SurveryorDataComponent = () => {
   const { user } = useAuthenticate();
   const url: string = `/clients/${user!._id}`;
@@ -47,11 +52,12 @@ const SurveryorDataComponent = () => {
 
   const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [status, setStatus] = useState<boolean | undefined>(false);
   const [address, setAddress] = useState<Address>(initialAddressState);
   const [erroEmail, setErrorEmail] = useState<string>("");
+
+  const [password, setPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
 
   // set values inputs
   useEffect(() => {
@@ -59,9 +65,7 @@ const SurveryorDataComponent = () => {
       setFirstName(user.firstName);
       setEmail(user.email);
       setPhone(user.phone);
-      setStatus(user.status);
       setAddress(user.address);
-      setPassword(user.password);
     }
   }, [user]);
 
@@ -75,9 +79,6 @@ const SurveryorDataComponent = () => {
         break;
       case "email":
         setEmail(value);
-        break;
-      case "password":
-        setPassword(value);
         break;
       case "state":
       case "CEP":
@@ -95,6 +96,17 @@ const SurveryorDataComponent = () => {
     }
   };
 
+  const handleChandePassword = (e: FormEvent) => {
+    e.preventDefault();
+
+    const passwordData: PasswordData = {
+      password,
+      newPassword,
+    };
+
+    
+  };
+
   const handleSubmitUpdateUser = (e: FormEvent) => {
     e.preventDefault();
 
@@ -106,12 +118,9 @@ const SurveryorDataComponent = () => {
       return setErrorEmail("Email não qualificado!");
     }
 
-    const formData: Clients = {
-      _id: user!._id,
+    const formData: Omit<Clients, "password"> = {
       firstName,
-      password,
       email,
-      status,
       phone,
       address,
       update_at: new Date().toLocaleString(),
@@ -184,7 +193,7 @@ const SurveryorDataComponent = () => {
               </div>
 
               <form className={styles.form} onSubmit={handleSubmitUpdateUser}>
-                <h3>Seus dados:</h3>
+                <h3>Seus dados</h3>
 
                 <label>
                   <span>Nome: </span>
@@ -224,7 +233,7 @@ const SurveryorDataComponent = () => {
                   />
                 </label>
 
-                <h3>Seu endereço:</h3>
+                <h3>Seu endereço</h3>
 
                 <label>
                   <span>CEP: </span>
@@ -282,6 +291,23 @@ const SurveryorDataComponent = () => {
                   </button>
                 </div>
               </form>
+
+              <div className={styles.form}>
+                <h3>Redefinir Senha</h3>
+                <form>
+                  <label>
+                    <span>Sua senha atual:</span>
+                    <input type="text" />
+                  </label>
+                  <label>
+                    <span>Nova senha:</span>
+                    <input type="text" />
+                  </label>
+                  <div className={styles.div_updatePassword_btn}>
+                    <input type="submit" className={styles.update_btn} />
+                  </div>
+                </form>
+              </div>
             </>
           )}
         </>

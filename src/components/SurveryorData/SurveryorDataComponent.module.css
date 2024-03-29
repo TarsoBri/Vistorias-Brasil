@@ -70,7 +70,6 @@
         margin-bottom: 5em;
         background-color: rgb(94, 104, 177);
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.377);
-
         padding: 2em;
         border-radius: 5px;
 
@@ -121,23 +120,24 @@
                 font-size: .8em;
             }
 
-            .update_btn {
-                margin-left: 10px;
-                color: white;
-                background-color: rgb(100, 105, 143);
-                height: 40px;
-                font-size: 1em;
-                width: 150px;
-                border-radius: 5px;
-                border: none;
-                cursor: pointer;
-                transition: all .2s;
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.685);
-            }
+        }
 
-            .update_btn:hover {
-                background-color: rgb(107, 115, 170);
-            }
+        .update_btn {
+            margin-left: 10px;
+            color: white;
+            background-color: rgb(100, 105, 143);
+            height: 40px;
+            font-size: 1em;
+            width: 150px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.685);
+        }
+
+        .update_btn:hover {
+            background-color: rgb(107, 115, 170);
         }
     }
 }

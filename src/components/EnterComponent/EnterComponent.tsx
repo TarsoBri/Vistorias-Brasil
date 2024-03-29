@@ -5,6 +5,8 @@ import Loading from "../Loading/Loading";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 // hooks
 import { useState, ChangeEvent, FormEvent } from "react";
@@ -22,6 +24,8 @@ const EnterComponent = ({ typeUser }: Props) => {
   const [email, setEmail] = useState<string>("");
   const [emailErro, setEmailErro] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const { handleLoginUser, loading, error } = useLoginUser(url);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,15 +86,21 @@ const EnterComponent = ({ typeUser }: Props) => {
 
         <label>
           <span>Senha: </span>
-          <input
-            type="password"
-            name="password"
-            placeholder="Insira sua senha."
-            required
-            value={password}
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
+          <div className={styles.password_input}>
+            <input
+              type={passwordVisibility ? "text" : "password"}
+              name="password"
+              placeholder="Insira sua senha."
+              required
+              value={password}
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+
+            <span onClick={() => setPasswordVisibility(!passwordVisibility)}>
+              {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
         </label>
 
         <button
