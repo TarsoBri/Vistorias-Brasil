@@ -199,7 +199,7 @@ const ClientsList = () => {
         </>
       ) : (
         <p>
-          Erro ao carregar clientes. Tente recarregar a página ou volte mais
+          Erro ao carregar vistorias. Tente recarregar a página ou volte mais
           tarde.
         </p>
       )}

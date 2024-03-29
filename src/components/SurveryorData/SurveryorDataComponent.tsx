@@ -2,10 +2,11 @@ import styles from "./SurveryorDataComponent.module.css";
 
 // hooks
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthenticate from "../../hooks/useAuthenticate";
 import { useUpdateData } from "../../hooks/useUpdateData";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
-import { useNavigate } from "react-router-dom";
+import { useChangePassword } from "../../hooks/useChangePassword";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -21,8 +22,18 @@ interface PasswordData {
 }
 
 const SurveryorDataComponent = () => {
+  const initialAddressState: Address = {
+    CEP: "",
+    state: "",
+    city: "",
+    road: "",
+    number: 0,
+    reference: "",
+  };
+
   const { user } = useAuthenticate();
   const url: string = `/clients/${user!._id}`;
+  const urlChangePassword: string = `/clients/changePassword/${user!._id}`;
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
 
   const navigate = useNavigate();
@@ -33,20 +44,18 @@ const SurveryorDataComponent = () => {
     loading: loadingStatesIBGE,
   } = useFetchDataIBGE();
 
-  const { handleUpdateData, loading, error } = useUpdateData(url);
+  const { handleUpdateData, loading, error, setError } = useUpdateData(url);
+
+  const {
+    handleChangePasswordApi,
+    loading: loadingChangePassword,
+    erro: erroChangePassword,
+    setErro: setErroChangePassword,
+  } = useChangePassword(urlChangePassword);
 
   useEffect(() => {
     handleFetchIBGE(urlStateIBGE);
   }, [urlStateIBGE]);
-
-  const initialAddressState: Address = {
-    CEP: "",
-    state: "",
-    city: "",
-    road: "",
-    number: 0,
-    reference: "",
-  };
 
   const container_notification = document.getElementById("notification");
 
@@ -68,6 +77,28 @@ const SurveryorDataComponent = () => {
       setAddress(user.address);
     }
   }, [user]);
+
+  const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    let input = e.target.value;
+
+    input = input.replace(/\D/g, "");
+
+    if (input.length <= 2) {
+      input = `(${input}`;
+    } else if (input.length <= 7) {
+      input = `(${input.slice(0, 2)}) ${input.slice(2)}`;
+    } else if (input.length <= 11) {
+      input = `(${input.slice(0, 2)}) ${input.slice(2, 7)}-${input.slice(7)}`;
+    } else {
+      input = `(${input.slice(0, 2)}) ${input.slice(2, 7)}-${input.slice(
+        7,
+        11
+      )}`;
+    }
+
+    setPhone(input);
+  };
 
   const handleChangeUpdate = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
@@ -96,7 +127,20 @@ const SurveryorDataComponent = () => {
     }
   };
 
-  const handleChandePassword = (e: FormEvent) => {
+  const handleChandePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { value, name } = e.target;
+
+    switch (name) {
+      case "password":
+        return setPassword(value);
+        break;
+      case "newPassword":
+        return setNewPassword(value);
+    }
+  };
+
+  const handleSubmitPassword = (e: FormEvent) => {
     e.preventDefault();
 
     const passwordData: PasswordData = {
@@ -104,7 +148,7 @@ const SurveryorDataComponent = () => {
       newPassword,
     };
 
-    
+    handleChangePasswordApi(passwordData);
   };
 
   const handleSubmitUpdateUser = (e: FormEvent) => {
@@ -119,6 +163,7 @@ const SurveryorDataComponent = () => {
     }
 
     const formData: Omit<Clients, "password"> = {
+      _id: user!._id,
       firstName,
       email,
       phone,
@@ -129,28 +174,6 @@ const SurveryorDataComponent = () => {
     handleUpdateData(formData);
 
     container_notification?.classList.remove("hide");
-  };
-
-  const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    let input = e.target.value;
-
-    input = input.replace(/\D/g, "");
-
-    if (input.length <= 2) {
-      input = `(${input}`;
-    } else if (input.length <= 7) {
-      input = `(${input.slice(0, 2)}) ${input.slice(2)}`;
-    } else if (input.length <= 11) {
-      input = `(${input.slice(0, 2)}) ${input.slice(2, 7)}-${input.slice(7)}`;
-    } else {
-      input = `(${input.slice(0, 2)}) ${input.slice(2, 7)}-${input.slice(
-        7,
-        11
-      )}`;
-    }
-
-    setPhone(input);
   };
 
   return (
@@ -174,14 +197,22 @@ const SurveryorDataComponent = () => {
           <p>Alterações salvas com sucesso!</p>
         </div>
       </div>
-      {[error, erroEmail].filter(Boolean).length > 0 && (
+      {erroEmail && (
         <div className={styles.container_notificationError}>
-          {[error, erroEmail].filter(Boolean).map((err, index) => (
-            <>
-              <button onClick={() => setErrorEmail("")}>X</button>
-              <p key={index}>{err}</p>
-            </>
-          ))}
+          <button onClick={() => setErrorEmail("")}>X</button>
+          <p>{erroEmail}</p>
+        </div>
+      )}
+      {erroChangePassword && (
+        <div className={styles.container_notificationError}>
+          <button onClick={() => setErroChangePassword("")}>X</button>
+          <p>{erroChangePassword}</p>
+        </div>
+      )}
+      {error && (
+        <div className={styles.container_notificationError}>
+          <button onClick={() => setError("")}>X</button>
+          <p>{error}</p>
         </div>
       )}
       {!loading ? (
@@ -273,8 +304,8 @@ const SurveryorDataComponent = () => {
                   <input
                     type="text"
                     name="city"
-                    placeholder="Insira sua cidade."
                     required
+                    placeholder="Insira sua cidade."
                     value={address.city}
                     onChange={handleChangeUpdate}
                   />
@@ -294,14 +325,24 @@ const SurveryorDataComponent = () => {
 
               <div className={styles.form}>
                 <h3>Redefinir Senha</h3>
-                <form>
+                <form onSubmit={handleSubmitPassword}>
                   <label>
                     <span>Sua senha atual:</span>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      name="password"
+                      onChange={handleChandePassword}
+                      value={password}
+                    />
                   </label>
                   <label>
                     <span>Nova senha:</span>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      name="newPassword"
+                      onChange={handleChandePassword}
+                      value={newPassword}
+                    />
                   </label>
                   <div className={styles.div_updatePassword_btn}>
                     <input type="submit" className={styles.update_btn} />
