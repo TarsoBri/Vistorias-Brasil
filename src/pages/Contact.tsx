@@ -1,4 +1,4 @@
-import ContactComponent from "../components/ConatctComponent/ContactComponent";
+import ContactComponent from "../components/ContactComponent/ContactComponent";
 
 const Contact = () => {
   return (

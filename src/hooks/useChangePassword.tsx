@@ -7,22 +7,23 @@ interface Passwords {
 }
 
 export const useChangePassword = (url: string) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [sucess, setSucess] = useState<string>("");
   const [erro, setErro] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangePasswordApi = async (data: Passwords) => {
-    setLoading(false);
+    setLoading(true);
 
     const newData = { ...data, update_at: new Date().toLocaleString() };
 
     await api
       .patch(url, newData)
-      .then(() => console.log("senha alterada!"))
+      .then(() => setSucess("Sua senha foi alterada com sucesso!"))
       .catch((err) => {
         setErro(err.response.data);
-      });
-    setLoading(true);
+      })
+      .finally(() => setLoading(false));
   };
 
-  return { handleChangePasswordApi, loading, erro, setErro };
+  return { handleChangePasswordApi, sucess, setSucess, loading, erro, setErro };
 };

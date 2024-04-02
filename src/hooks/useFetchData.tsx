@@ -1,29 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // api
 import { api } from "../Apis/api";
 
 // Interfaces
 import { Clients } from "../interfaces/Clients";
-interface FiltersOrders {
-  filter: string;
+interface Props {
+  url: string;
   order: string;
+}
+interface Filters {
+  filter: string;
   stateFilter?: string;
 }
 
-export const useFetchData = (url: string) => {
+export const useFetchData = ({ url, order }: Props) => {
   const [data, setData] = useState<Clients[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const [date, setDate] = useState<string>("");
 
   const convertDate = (dateString: string | undefined): Date | undefined => {
     return dateString
       ? new Date(dateString.split("/").reverse().join("-"))
       : undefined;
   };
-  if (data && (date === "news" || date === "olds")) {
-    const sortOrder = date === "news" ? -1 : 1;
+  if (data && (order === "news" || order === "olds")) {
+    const sortOrder = order === "news" ? -1 : 1;
     data.sort((a, b) => {
       const dateA = convertDate(a.created_at);
       const dateB = convertDate(b.created_at);
@@ -32,45 +34,39 @@ export const useFetchData = (url: string) => {
         : 0;
     });
   }
-  const handleFetch = async ({ filter, order, stateFilter }: FiltersOrders) => {
+  const handleFetch = async ({ filter, stateFilter }: Filters) => {
     setLoading(true);
-    setDate(order);
     await api
       .get(url)
       .then((res) => {
         if (filter) {
+          let filteredData = res.data.filter(
+            (user: Clients) => user.surveyor !== true
+          );
+
+          if (stateFilter) {
+            filteredData = filteredData.filter(
+              (user: Clients) => user.address.state === stateFilter
+            );
+          }
+
           switch (filter) {
             case "every":
-              setData(
-                res.data.filter((user: Clients) => user.surveyor !== true)
-              );
               break;
             case "done":
-              setData(
-                res.data.filter(
-                  (user: Clients) =>
-                    user.surveyor !== true && user.status === true
-                )
+              filteredData = filteredData.filter(
+                (user: Clients) => user.status === true
               );
               break;
             case "notDone":
-              setData(
-                res.data.filter(
-                  (user: Clients) =>
-                    user.surveyor !== true && user.status !== true
-                )
+              filteredData = filteredData.filter(
+                (user: Clients) => user.status !== true
               );
               break;
+            default:
+              throw new Error("Nenhum filtro encontrado!");
           }
-
-          if (stateFilter) {
-            setData(
-              res.data.filter(
-                (user: Clients) =>
-                  user.surveyor !== true && user.address.state === stateFilter
-              )
-            );
-          }
+          setData(filteredData);
         }
       })
       .catch((err) => setError(`Erro na API: ${err.message}`));

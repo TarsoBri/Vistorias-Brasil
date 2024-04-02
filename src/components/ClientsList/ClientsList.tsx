@@ -15,7 +15,6 @@ const ClientsList = () => {
   const url: string = "/clients";
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
 
-  const { handleFetch, data: users, loading, error } = useFetchData(url);
   const {
     handleFetchIBGE,
     data: states,
@@ -25,15 +24,21 @@ const ClientsList = () => {
   const [filter, setFilter] = useState<string>("every");
   const [stateFilter, setStateFilter] = useState<string>("");
   const [order, setOrder] = useState<string>("news");
-  const [stateSelect, setStateSelect] = useState<boolean>(false);
+
+  const {
+    handleFetch,
+    data: users,
+    loading,
+    error,
+  } = useFetchData({ url, order });
 
   useEffect(() => {
-    handleFetch({ filter, order, stateFilter });
+    handleFetchIBGE(urlStateIBGE);
+  }, [urlStateIBGE]);
 
-    if (stateSelect === true) {
-      handleFetchIBGE(urlStateIBGE);
-    }
-  }, [filter, order, stateSelect, stateFilter]);
+  useEffect(() => {
+    handleFetch({ filter, stateFilter });
+  }, [filter, stateFilter]);
 
   const handleOrder = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value, name } = e.target;
@@ -43,14 +48,9 @@ const ClientsList = () => {
         case "every":
         case "done":
         case "notDone":
-          setStateSelect(false);
           setFilter(value);
-          setStateFilter("");
           break;
-        case "state":
-          setStateSelect(true);
-          setStateFilter("");
-          break;
+
         default:
           return;
       }
@@ -83,35 +83,30 @@ const ClientsList = () => {
             </label>
 
             <label>
-              <span>Filtrar por: </span>
+              <span>Status: </span>
               <select name="filter" onChange={handleOrder}>
                 <option value="every">Todas</option>
                 <option value="done">Realiazadas</option>
                 <option value="notDone">Não realiazadas</option>
-                <option value="state">Estados</option>
               </select>
             </label>
 
-            {stateSelect && (
-              <label>
-                <span>Selecione um estado: </span>
-                <select
-                  disabled={!loadingStates ? false : true}
-                  name="orderState"
-                  onChange={handleOrder}
-                >
-                  <option value="">
-                    {!loadingStates ? "Selecione" : "Aguarde..."}
-                  </option>
-                  {states &&
-                    states.map((state) => (
-                      <option key={state.id} value={state.sigla}>
-                        {state.nome}
-                      </option>
-                    ))}
-                </select>
-              </label>
-            )}
+            <label>
+              <span>Selecione um estado: </span>
+              <select
+                disabled={!loadingStates ? false : true}
+                name="orderState"
+                onChange={handleOrder}
+              >
+                <option value="">Nenhum</option>
+                {states &&
+                  states.map((state) => (
+                    <option key={state.id} value={state.sigla}>
+                      {state.nome}
+                    </option>
+                  ))}
+              </select>
+            </label>
           </div>
           {!loading ? (
             <>

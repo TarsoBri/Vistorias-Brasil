@@ -23,12 +23,14 @@ import EnterSurveryor from "./pages/EnterSurveryor";
 import Vistory from "./pages/Vistory";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ScrollTop from "./components/ScrollTop";
 
 const App = () => {
   const { user } = useAuthenticate();
 
   return (
     <BrowserRouter>
+      <ScrollTop />
       <div className="App">
         <Logout />
         <NavBar />

@@ -10,16 +10,15 @@ import { useChangePassword } from "../../hooks/useChangePassword";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 // Interfaces
 import { Address } from "../../interfaces/Address";
 import { Clients } from "../../interfaces/Clients";
 import Loading from "../Loading/Loading";
+import PasswordData from "../../interfaces/PasswordData";
 
-interface PasswordData {
-  password: string;
-  newPassword: string;
-}
 
 const SurveryorDataComponent = () => {
   const initialAddressState: Address = {
@@ -48,6 +47,8 @@ const SurveryorDataComponent = () => {
 
   const {
     handleChangePasswordApi,
+    sucess: sucessChangePassword,
+    setSucess: setSucessChangePassword,
     loading: loadingChangePassword,
     erro: erroChangePassword,
     setErro: setErroChangePassword,
@@ -67,6 +68,9 @@ const SurveryorDataComponent = () => {
 
   const [password, setPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
+
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [newPasswordVisibility, setNewPasswordVisibility] = useState(false);
 
   // set values inputs
   useEffect(() => {
@@ -148,13 +152,19 @@ const SurveryorDataComponent = () => {
       newPassword,
     };
 
+    setSucessChangePassword("");
+    setErroChangePassword("");
+
     handleChangePasswordApi(passwordData);
+
+    setPassword("");
+    setNewPassword("");
+
+    window.scrollTo(0, 0);
   };
 
   const handleSubmitUpdateUser = (e: FormEvent) => {
     e.preventDefault();
-
-    window.scrollTo(0, 0);
 
     if (email.includes("vistoriasbrasil")) {
       setErrorEmail("");
@@ -174,6 +184,8 @@ const SurveryorDataComponent = () => {
     handleUpdateData(formData);
 
     container_notification?.classList.remove("hide");
+
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -197,24 +209,35 @@ const SurveryorDataComponent = () => {
           <p>Alterações salvas com sucesso!</p>
         </div>
       </div>
-      {erroEmail && (
-        <div className={styles.container_notificationError}>
-          <button onClick={() => setErrorEmail("")}>X</button>
-          <p>{erroEmail}</p>
+
+      {sucessChangePassword && (
+        <div className={styles.container_notification}>
+          <button onClick={() => setSucessChangePassword("")}>X</button>
+          <p>{sucessChangePassword}</p>
         </div>
       )}
+
       {erroChangePassword && (
         <div className={styles.container_notificationError}>
           <button onClick={() => setErroChangePassword("")}>X</button>
           <p>{erroChangePassword}</p>
         </div>
       )}
+
+      {erroEmail && (
+        <div className={styles.container_notificationError}>
+          <button onClick={() => setErrorEmail("")}>X</button>
+          <p>{erroEmail}</p>
+        </div>
+      )}
+
       {error && (
         <div className={styles.container_notificationError}>
           <button onClick={() => setError("")}>X</button>
           <p>{error}</p>
         </div>
       )}
+
       {!loading ? (
         <>
           {user && (
@@ -325,27 +348,58 @@ const SurveryorDataComponent = () => {
 
               <div className={styles.form}>
                 <h3>Redefinir Senha</h3>
-                <form onSubmit={handleSubmitPassword}>
+                <form
+                  onSubmit={handleSubmitPassword}
+                  className={styles.password_form}
+                >
                   <label>
-                    <span>Sua senha atual:</span>
-                    <input
-                      type="text"
-                      name="password"
-                      onChange={handleChandePassword}
-                      value={password}
-                    />
+                    <span>Sua senha:</span>
+                    <div className={styles.password_input}>
+                      <input
+                        type={passwordVisibility ? "text" : "password"}
+                        name="password"
+                        placeholder="Insira sua senha."
+                        required
+                        value={password}
+                        onChange={handleChandePassword}
+                      />
+
+                      <span
+                        onClick={() =>
+                          setPasswordVisibility(!passwordVisibility)
+                        }
+                      >
+                        {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+                      </span>
+                    </div>
                   </label>
                   <label>
                     <span>Nova senha:</span>
-                    <input
-                      type="text"
-                      name="newPassword"
-                      onChange={handleChandePassword}
-                      value={newPassword}
-                    />
+                    <div className={styles.password_input}>
+                      <input
+                        type={newPasswordVisibility ? "text" : "password"}
+                        name="newPassword"
+                        placeholder="Insira sua nova senha."
+                        minLength={8}
+                        required
+                        value={newPassword}
+                        onChange={handleChandePassword}
+                      />
+
+                      <span
+                        onClick={() =>
+                          setNewPasswordVisibility(!newPasswordVisibility)
+                        }
+                      >
+                        {newPasswordVisibility ? <FaEye /> : <FaEyeSlash />}
+                      </span>
+                    </div>
                   </label>
+
                   <div className={styles.div_updatePassword_btn}>
-                    <input type="submit" className={styles.update_btn} />
+                    <button type="submit" className={styles.update_btn}>
+                      {!loadingChangePassword ? "Alterar senha" : <Loading />}
+                    </button>
                   </div>
                 </form>
               </div>

@@ -6,20 +6,25 @@ import useAuthenticate from "../../hooks/useAuthenticate";
 import { useUpdateData } from "../../hooks/useUpdateData";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
 import { useNavigate } from "react-router-dom";
-
-// Interfaces
-import { Address } from "../../interfaces/Address";
-import { Clients } from "../../interfaces/Clients";
+import { useChangePassword } from "../../hooks/useChangePassword";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 // Components
 import Loading from "../Loading/Loading";
 
+// Interfaces
+import { Address } from "../../interfaces/Address";
+import { Clients } from "../../interfaces/Clients";
+import PasswordData from "../../interfaces/PasswordData";
+
 const MyVistoryComponent = () => {
   const { user } = useAuthenticate();
-  const url = user && `/clients/${user._id}`;
+  const url: string = `/clients/${user!._id}`;
+  const urlChangePassword: string = `/clients/changePassword/${user!._id}`;
   const urlStateIBGE: string = "https://brasilapi.com.br/api/ibge/uf/v1";
 
   const navigate = useNavigate();
@@ -31,6 +36,15 @@ const MyVistoryComponent = () => {
   } = useFetchDataIBGE();
 
   const { handleUpdateData, loading, error, setError } = useUpdateData(url);
+
+  const {
+    handleChangePasswordApi,
+    sucess: sucessChangePassword,
+    setSucess: setSucessChangePassword,
+    loading: loadingChangePassword,
+    erro: erroChangePassword,
+    setErro: setErroChangePassword,
+  } = useChangePassword(urlChangePassword);
 
   const initialAddressState: Address = {
     CEP: "",
@@ -45,10 +59,15 @@ const MyVistoryComponent = () => {
 
   const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [status, setStatus] = useState<boolean | undefined>(false);
   const [address, setAddress] = useState<Address>(initialAddressState);
+
+  const [password, setPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const [newPasswordVisibility, setNewPasswordVisibility] = useState(false);
 
   useEffect(() => {
     handleFetchIBGE(urlStateIBGE);
@@ -59,9 +78,7 @@ const MyVistoryComponent = () => {
       setFirstName(user.firstName);
       setEmail(user.email);
       setPhone(user.phone);
-      setStatus(user.status);
       setAddress(user.address);
-      setPassword(user.password);
     }
   }, [user]);
 
@@ -95,27 +112,6 @@ const MyVistoryComponent = () => {
     }
   };
 
-  const handleSubmitUpdateUser = (e: FormEvent) => {
-    e.preventDefault();
-
-    const formData: Clients = {
-      _id: user!._id,
-      firstName,
-      password,
-      email,
-      status,
-      phone,
-      address,
-      update_at: new Date().toLocaleString(),
-    };
-
-    handleUpdateData(formData);
-
-    container_notification?.classList.remove("hide");
-
-    window.scrollTo(0, 0);
-  };
-
   const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     let input = e.target.value;
@@ -138,6 +134,59 @@ const MyVistoryComponent = () => {
     setPhone(input);
   };
 
+  const handleChandePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { value, name } = e.target;
+
+    switch (name) {
+      case "password":
+        return setPassword(value);
+        break;
+      case "newPassword":
+        return setNewPassword(value);
+    }
+  };
+
+  const handleSubmitPassword = (e: FormEvent) => {
+    e.preventDefault();
+
+    const passwordData: PasswordData = {
+      password,
+      newPassword,
+    };
+
+    setSucessChangePassword("");
+    setErroChangePassword("");
+
+    handleChangePasswordApi(passwordData);
+
+    setPassword("");
+    setNewPassword("");
+
+    window.scrollTo(0, 0);
+  };
+
+  const handleSubmitUpdateUser = (e: FormEvent) => {
+    e.preventDefault();
+
+    const formData: Clients = {
+      _id: user!._id,
+      firstName,
+      password,
+      email,
+      status,
+      phone,
+      address,
+      update_at: new Date().toLocaleString(),
+    };
+
+    handleUpdateData(formData);
+
+    container_notification?.classList.remove("hide");
+
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className={styles.container}>
       <div className="return_btn">
@@ -154,6 +203,20 @@ const MyVistoryComponent = () => {
           <p>Alterações salvas com sucesso!</p>
         </div>
       </div>
+
+      {sucessChangePassword && (
+        <div className={styles.container_notification}>
+          <button onClick={() => setSucessChangePassword("")}>X</button>
+          <p>{sucessChangePassword}</p>
+        </div>
+      )}
+
+      {erroChangePassword && (
+        <div className={styles.container_notificationError}>
+          <button onClick={() => setErroChangePassword("")}>X</button>
+          <p>{erroChangePassword}</p>
+        </div>
+      )}
 
       {error && (
         <div className={styles.container_notificationError}>
@@ -312,6 +375,64 @@ const MyVistoryComponent = () => {
                   </button>
                 </div>
               </form>
+
+              <div className={styles.form}>
+                <h3>Redefinir Senha</h3>
+                <form
+                  onSubmit={handleSubmitPassword}
+                  className={styles.password_form}
+                >
+                  <label>
+                    <span>Sua senha:</span>
+                    <div className={styles.password_input}>
+                      <input
+                        type={passwordVisibility ? "text" : "password"}
+                        name="password"
+                        placeholder="Insira sua senha."
+                        required
+                        value={password}
+                        onChange={handleChandePassword}
+                      />
+
+                      <span
+                        onClick={() =>
+                          setPasswordVisibility(!passwordVisibility)
+                        }
+                      >
+                        {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+                      </span>
+                    </div>
+                  </label>
+                  <label>
+                    <span>Nova senha:</span>
+                    <div className={styles.password_input}>
+                      <input
+                        type={newPasswordVisibility ? "text" : "password"}
+                        name="newPassword"
+                        placeholder="Insira sua nova senha."
+                        minLength={8}
+                        required
+                        value={newPassword}
+                        onChange={handleChandePassword}
+                      />
+
+                      <span
+                        onClick={() =>
+                          setNewPasswordVisibility(!newPasswordVisibility)
+                        }
+                      >
+                        {newPasswordVisibility ? <FaEye /> : <FaEyeSlash />}
+                      </span>
+                    </div>
+                  </label>
+
+                  <div className={styles.div_updatePassword_btn}>
+                    <button type="submit" className={styles.update_btn}>
+                      {!loadingChangePassword ? "Alterar senha" : <Loading />}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </>
           )}
         </>
