@@ -40,7 +40,7 @@ interface Decode {
 export const Authenticate = createContext<Context | undefined>(undefined);
 
 export const AutheticateProvider = ({ children }: Props) => {
-  const url: string = "/cliesnt/login/confirm";
+  const url: string = "/clients/login/confirm";
   const [user, setUser] = useState<Clients | undefined>();
   const [keyToken, setKeyToken] = useSessionStorage<Token>("UserAuth", {
     token: "",

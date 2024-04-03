@@ -70,9 +70,9 @@ const ClientsList = () => {
   return (
     <div className={styles.clients_container}>
       <h2>Vistorias pelo Brasil</h2>
-      <h3>Filtragem:</h3>
       {!error ? (
         <>
+          <h3>Filtragem:</h3>
           <div className={styles.filters}>
             <label>
               <span>Ordenar por dia: </span>

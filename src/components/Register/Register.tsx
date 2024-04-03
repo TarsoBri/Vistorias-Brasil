@@ -17,7 +17,7 @@ const Register = () => {
       <div className={styles.login}>
         <div className={styles.adm}>
           <div>
-            <h3>Cadastrei um novo vistoriador</h3>
+            <h3>Cadastreie um novo vistoriador</h3>
             <Link to={"/RegisterSurveryor"} className="submit">
               Cadastrar
             </Link>
