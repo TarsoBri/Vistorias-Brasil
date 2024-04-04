@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react";
-
-import { api } from "../Apis/api";
-
-import { Login } from "../interfaces/Login";
-import { Clients } from "../interfaces/Clients";
+import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { api } from "../Apis/api";
+
 // context
+import useAuthToUseContext from "./useAuthToUseContext";
 import useAuthenticate from "./useAuthenticate";
 
+// interfaces
+import { ConfigAxios } from "../interfaces/ConfigAxios";
+import { Login } from "../interfaces/Login";
+interface Config extends ConfigAxios {
+  data: Login;
+}
+
 export const useLoginUser = (url: string) => {
+  const { tokenAuth } = useAuthToUseContext();
+
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -19,8 +26,17 @@ export const useLoginUser = (url: string) => {
 
   const handleLoginUser = async (data: Login) => {
     setLoading(true);
+
+    const config: Config = {
+      url,
+      method: "post",
+      data: data,
+      headers: {
+        "Token-Auth": tokenAuth,
+      },
+    };
     await api
-      .post(url, data)
+      .request(config)
       .then((res) => {
         setKeyToken(res.data);
         navigate("/");

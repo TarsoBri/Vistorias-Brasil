@@ -1,10 +1,14 @@
 import { useState } from "react";
 
+// Context
+import useAuthToUseContext from "./useAuthToUseContext";
+
 // api
 import { api } from "../Apis/api";
 
 // Interfaces
 import { Clients } from "../interfaces/Clients";
+import { ConfigAxios } from "../interfaces/ConfigAxios";
 interface Props {
   url: string;
   order: string;
@@ -15,6 +19,8 @@ interface Filters {
 }
 
 export const useFetchData = ({ url, order }: Props) => {
+  const { tokenAuth } = useAuthToUseContext();
+
   const [data, setData] = useState<Clients[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -36,8 +42,15 @@ export const useFetchData = ({ url, order }: Props) => {
   }
   const handleFetch = async ({ filter, stateFilter }: Filters) => {
     setLoading(true);
+    const config: ConfigAxios = {
+      url,
+      method: "get",
+      headers: {
+        "Token-Auth": tokenAuth,
+      },
+    };
     await api
-      .get(url)
+      .request(config)
       .then((res) => {
         if (filter) {
           let filteredData = res.data.filter(

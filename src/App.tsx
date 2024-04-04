@@ -1,5 +1,6 @@
 import "./App.css";
 
+
 // context
 import useAuthenticate from "./hooks/useAuthenticate";
 
@@ -26,6 +27,8 @@ import Contact from "./pages/Contact";
 import ScrollTop from "./components/ScrollTop";
 
 const App = () => {
+
+
   const { user } = useAuthenticate();
 
   return (

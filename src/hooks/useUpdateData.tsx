@@ -1,13 +1,21 @@
 import { useState } from "react";
 import { api } from "../Apis/api";
 
-// interfaces
-import { Clients } from "../interfaces/Clients";
-import UpdateStatus from "../interfaces/UpdateStatus";
-
+// context
+import useAuthToUseContext from "./useAuthToUseContext";
 import useAuthenticate from "./useAuthenticate";
 
+// interfaces
+import { ConfigAxios } from "../interfaces/ConfigAxios";
+import { Clients } from "../interfaces/Clients";
+import UpdateStatus from "../interfaces/UpdateStatus";
+interface Config extends ConfigAxios {
+  data: Clients | UpdateStatus;
+}
+
 export const useUpdateData = (url: string | undefined) => {
+  const { tokenAuth } = useAuthToUseContext();
+
   const { user, setUser } = useAuthenticate();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -16,8 +24,18 @@ export const useUpdateData = (url: string | undefined) => {
   const handleUpdateData = async (data: Clients | UpdateStatus) => {
     if (url !== undefined) {
       setLoading(true);
+
+      const config: Config = {
+        url,
+        method: "patch",
+        data: data,
+        headers: {
+          "Token-Auth": tokenAuth,
+        },
+      };
+
       await api
-        .patch(url, data)
+        .request(config)
         .then((res) => {
           if (user && user._id === data._id) {
             setUser(res.data);

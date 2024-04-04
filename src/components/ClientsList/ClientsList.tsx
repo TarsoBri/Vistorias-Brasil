@@ -31,7 +31,6 @@ const ClientsList = () => {
     loading,
     error,
   } = useFetchData({ url, order });
-
   useEffect(() => {
     handleFetchIBGE(urlStateIBGE);
   }, [urlStateIBGE]);

@@ -6,13 +6,12 @@ import {
   useState,
   useEffect,
 } from "react";
+
+// Hooks
+import { useAutenticateTokenUser } from "../hooks/useAutenticateTokenUser";
+
+// SessionStorage
 import { useSessionStorage } from "@uidotdev/usehooks";
-
-//axios
-import { api } from "../Apis/api";
-
-// Token
-import { jwtDecode } from "jwt-decode";
 
 //Interfaces
 import { Clients } from "../interfaces/Clients";
@@ -31,11 +30,6 @@ interface Props {
 interface Token {
   token: string;
 }
-interface Decode {
-  exp: number;
-  iat: number;
-  userId: string;
-}
 
 export const Authenticate = createContext<Context | undefined>(undefined);
 
@@ -47,31 +41,26 @@ export const AutheticateProvider = ({ children }: Props) => {
   });
   console.log(keyToken);
 
-  // Authorization user
+  // Confirm auth user
+  const { authorizeToken, data, erro } = useAutenticateTokenUser(url);
+
   useEffect(() => {
-    const authorizeToken = async () => {
-      if (keyToken.token != "") {
-        const decodedToken = jwtDecode<Decode>(keyToken.token);
-        if (decodedToken && decodedToken.userId) {
-          await api
-            .post(url, {
-              token: keyToken.token,
-              userId: decodedToken.userId,
-              key: import.meta.env.VITE_TOKEN_PASSWORD,
-            })
-            .then((res) => setUser(res.data))
-            .catch(() => {
-              console.error("Usuário não autorizado a entrar.");
-              setKeyToken({ token: "" });
-              setUser(undefined);
-            });
-        }
-      }
-    };
-    authorizeToken();
+    authorizeToken(keyToken.token);
   }, [keyToken.token]);
+
+  useEffect(() => {
+    if (data) {
+      setUser(data);
+    } else if (erro) {
+      setKeyToken({ token: "" });
+      setUser(undefined);
+    }
+  }, [data, erro]);
+
   console.log(user);
-  const handleModalLogout = (logout: boolean): void => {
+
+  // Modal logout func
+  const handleModalLogout = (logout: boolean) => {
     const modal_logout = document.getElementById("modal_logout");
 
     modal_logout?.classList.toggle("hide");
