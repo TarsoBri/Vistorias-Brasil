@@ -49,41 +49,45 @@ const VistoryByID = ({ id }: Props) => {
     <div>
       {!error || !errorFetch ? (
         <>
-          {!loadingFetch ? (
-            <>
-              {user && (
-                <div className={styles.userData}>
-                  <div className="return_btn">
-                    <button onClick={() => navigate(-1)}>
-                      <FaArrowLeftLong />
-                    </button>
+          {user && (
+            <div className={styles.userData}>
+              <div className="return_btn">
+                <button onClick={() => navigate(-1)}>
+                  <FaArrowLeftLong />
+                </button>
+              </div>
+              <h2>Vistoria de {user.firstName}</h2>
+              <h3>Status de vistoria:</h3>
+              <div className={styles.status}>
+                <label className="toggler-wrapper style-check">
+                  <input
+                    type="checkbox"
+                    checked={user.status}
+                    onChange={handleChange}
+                  />
+                  <div className="toggler-slider">
+                    <div className="toggler-knob"></div>
                   </div>
-                  <h2>Vistoria de {user.firstName}</h2>
-                  <h3>Status de vistoria:</h3>
-                  <div className={styles.status}>
-                    <label className="toggler-wrapper style-check">
-                      <input
-                        type="checkbox"
-                        checked={user.status}
-                        onChange={handleChange}
-                      />
-                      <div className="toggler-slider">
-                        <div className="toggler-knob"></div>
-                      </div>
-                    </label>
-                    <p
-                      style={{
-                        color: user.status
-                          ? "rgb(45, 220, 15)"
-                          : "rgb(167, 0, 0)",
-                      }}
-                    >
-                      <span>Status:</span>
-                      {user.status
-                        ? " Vistoria realizada!"
-                        : " Vistoria não realizada!"}
-                    </p>
-                  </div>
+                </label>
+                <p
+                  style={{
+                    color: loadingFetch
+                      ? "white"
+                      : user.status
+                      ? "rgb(45, 220, 15)"
+                      : "rgb(167, 0, 0)",
+                  }}
+                >
+                  <span>Status: </span>
+                  {loadingFetch
+                    ? "Aguarde..."
+                    : user.status
+                    ? "Vistoria realizada!"
+                    : "Vistoria não realizada!"}
+                </p>
+              </div>
+              {!loadingFetch ? (
+                <div>
                   <div className={styles.userData_content}>
                     <h3>Dados de contato:</h3>
                     <p>
@@ -114,12 +118,12 @@ const VistoryByID = ({ id }: Props) => {
                     )}
                   </div>
                 </div>
+              ) : (
+                <div className="loading">
+                  <div className="opacity"></div>
+                  <Loading />
+                </div>
               )}
-            </>
-          ) : (
-            <div className="loading">
-              <div className="opacity"></div>
-              <Loading />
             </div>
           )}
         </>

@@ -11,7 +11,7 @@ import {
 import { useAutenticateTokenUser } from "../hooks/useAutenticateTokenUser";
 
 // SessionStorage
-import { useSessionStorage } from "@uidotdev/usehooks";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 //Interfaces
 import { Clients } from "../interfaces/Clients";
@@ -36,10 +36,9 @@ export const Authenticate = createContext<Context | undefined>(undefined);
 export const AutheticateProvider = ({ children }: Props) => {
   const url: string = "/clients/login/confirm";
   const [user, setUser] = useState<Clients | undefined>();
-  const [keyToken, setKeyToken] = useSessionStorage<Token>("UserAuth", {
+  const [keyToken, setKeyToken] = useLocalStorage<Token>("UserAuth", {
     token: "",
   });
-  console.log(keyToken);
 
   // Confirm auth user
   const { authorizeToken, data, erro } = useAutenticateTokenUser(url);
@@ -56,8 +55,6 @@ export const AutheticateProvider = ({ children }: Props) => {
       setUser(undefined);
     }
   }, [data, erro]);
-
-  console.log(user);
 
   // Modal logout func
   const handleModalLogout = (logout: boolean) => {

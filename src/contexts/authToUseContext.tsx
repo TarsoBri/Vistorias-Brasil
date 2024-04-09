@@ -16,7 +16,7 @@ export const AuthToUse = createContext<Context>({ tokenAuth: "" });
 export const AuthToUseProvider = ({ children }: Props) => {
   // Auth to use
   const { handleAuthToUse, tokenAuthToUse } = useAuthToUse();
-
+  console.log(tokenAuthToUse);
   useEffect(() => {
     handleAuthToUse();
   }, []);

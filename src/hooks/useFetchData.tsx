@@ -59,7 +59,8 @@ export const useFetchData = ({ url, order }: Props) => {
 
           if (stateFilter) {
             filteredData = filteredData.filter(
-              (user: Clients) => user.address.state === stateFilter
+              (user: Clients) =>
+                user.address.state === stateFilter && user.surveyor !== true
             );
           }
 
@@ -68,12 +69,14 @@ export const useFetchData = ({ url, order }: Props) => {
               break;
             case "done":
               filteredData = filteredData.filter(
-                (user: Clients) => user.status === true
+                (user: Clients) =>
+                  user.status === true && user.surveyor !== true
               );
               break;
             case "notDone":
               filteredData = filteredData.filter(
-                (user: Clients) => user.status !== true
+                (user: Clients) =>
+                  user.status !== true && user.surveyor !== true
               );
               break;
             default:

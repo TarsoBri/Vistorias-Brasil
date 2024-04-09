@@ -66,6 +66,7 @@ const ClientsList = () => {
       setStateFilter(value);
     }
   };
+
   return (
     <div className={styles.clients_container}>
       <h2>Vistorias pelo Brasil</h2>
