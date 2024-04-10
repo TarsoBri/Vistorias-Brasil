@@ -19,7 +19,6 @@ import { Clients } from "../../interfaces/Clients";
 import Loading from "../Loading/Loading";
 import PasswordData from "../../interfaces/PasswordData";
 
-
 const SurveryorDataComponent = () => {
   const initialAddressState: Address = {
     CEP: "",
@@ -137,10 +136,13 @@ const SurveryorDataComponent = () => {
 
     switch (name) {
       case "password":
-        return setPassword(value);
+        setPassword(value);
         break;
       case "newPassword":
-        return setNewPassword(value);
+        setNewPassword(value);
+        break;
+      default:
+        return;
     }
   };
 
@@ -148,6 +150,7 @@ const SurveryorDataComponent = () => {
     e.preventDefault();
 
     const passwordData: PasswordData = {
+      _id: user!._id,
       password,
       newPassword,
     };

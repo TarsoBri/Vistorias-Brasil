@@ -140,10 +140,13 @@ const MyVistoryComponent = () => {
 
     switch (name) {
       case "password":
-        return setPassword(value);
+        setPassword(value);
         break;
       case "newPassword":
-        return setNewPassword(value);
+        setNewPassword(value);
+        break;
+      default:
+        return;
     }
   };
 
@@ -151,6 +154,7 @@ const MyVistoryComponent = () => {
     e.preventDefault();
 
     const passwordData: PasswordData = {
+      _id: user!._id,
       password,
       newPassword,
     };

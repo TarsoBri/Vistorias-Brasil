@@ -1,5 +1,8 @@
 import styles from "./EnterComponent.module.css";
 
+// Router
+import { Link } from "react-router-dom";
+
 //components
 import Loading from "../Loading/Loading";
 
@@ -102,6 +105,9 @@ const EnterComponent = ({ typeUser }: Props) => {
             </span>
           </div>
         </label>
+        <div className={styles.recovery_link}>
+          <Link to="/SendEmail">Esqueceu sua senha?</Link>
+        </div>
 
         <button
           type="submit"

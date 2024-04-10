@@ -1,6 +1,5 @@
 import "./App.css";
 
-
 // context
 import useAuthenticate from "./hooks/useAuthenticate";
 
@@ -25,10 +24,9 @@ import Vistory from "./pages/Vistory";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ScrollTop from "./components/ScrollTop";
+import SendEmailPage from "./pages/SendEmailPage";
 
 const App = () => {
-
-
   const { user } = useAuthenticate();
 
   return (
@@ -67,6 +65,12 @@ const App = () => {
               <Route path="/Login" element={<Login />} />
             ) : (
               <Route path="/Login" element={<Navigate to="/" />} />
+            )}
+
+            {!user ? (
+              <Route path="/SendEmail" element={<SendEmailPage />} />
+            ) : (
+              <Route path="/SendEmail" element={<Navigate to="/" />} />
             )}
 
             {!user ? (

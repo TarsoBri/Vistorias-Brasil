@@ -120,6 +120,7 @@ const CreateClient = () => {
     }
 
     const formData: Clients = {
+      surveyor: false,
       firstName,
       password,
       email,
