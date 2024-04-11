@@ -1,7 +1,8 @@
 import "./App.css";
 
 // context
-import useAuthenticate from "./hooks/useAuthenticate";
+import useCodeHashed from "./hooks/useContexts/useCodeHashed";
+import useAuthenticate from "./hooks/useContexts/useAuthenticate";
 
 // Router
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -25,9 +26,12 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ScrollTop from "./components/ScrollTop";
 import SendEmailPage from "./pages/SendEmailPage";
+import ConfirmCodePage from "./pages/ConfirmCodePage";
 
 const App = () => {
   const { user } = useAuthenticate();
+
+  const { codeHashed } = useCodeHashed();
 
   return (
     <BrowserRouter>
@@ -43,7 +47,7 @@ const App = () => {
 
             <Route path="/Contact" element={<Contact />} />
 
-            {user && user.surveyor !== true ? (
+            {user && user.surveyor != true ? (
               <Route path="/MyVistory" element={<MyVistory />} />
             ) : (
               <Route path="/MyVistory" element={<Navigate to="/" />} />
@@ -71,6 +75,12 @@ const App = () => {
               <Route path="/SendEmail" element={<SendEmailPage />} />
             ) : (
               <Route path="/SendEmail" element={<Navigate to="/" />} />
+            )}
+
+            {!user  ? (
+              <Route path="/ConfirmCode" element={<ConfirmCodePage />} />
+            ) : (
+              <Route path="/ConfirmCode" element={<Navigate to="/" />} />
             )}
 
             {!user ? (

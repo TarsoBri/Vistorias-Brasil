@@ -1,4 +1,3 @@
-import styles from "./MyVistory.module.css";
 
 import MyVistoryComponent from "../components/MyVistory/MyVistoryComponent";
 

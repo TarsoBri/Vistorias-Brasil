@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../Apis/api";
 
 // context
-import useAuthToUseContext from "./useAuthToUseContext";
-import useAuthenticate from "./useAuthenticate";
+import useAuthToUseContext from "./useContexts/useAuthToUseContext";
+import useAuthenticate from "./useContexts/useAuthenticate";
 
 // interfaces
 import { ConfigAxios } from "../interfaces/ConfigAxios";

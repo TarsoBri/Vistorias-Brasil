@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Context
-import useAuthToUseContext from "./useAuthToUseContext";
+import useAuthToUseContext from "./useContexts/useAuthToUseContext";
 
 // api
 import { api } from "../Apis/api";

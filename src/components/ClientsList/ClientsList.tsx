@@ -7,7 +7,7 @@ import Loading from "../Loading/Loading";
 //hooks
 import { ChangeEvent, useEffect, useState } from "react";
 import { useFetchData } from "../../hooks/useFetchData";
-import useAuthenticate from "../../hooks/useAuthenticate";
+import useAuthenticate from "../../hooks/useContexts/useAuthenticate";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
 
 const ClientsList = () => {

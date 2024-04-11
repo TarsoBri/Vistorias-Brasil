@@ -2,7 +2,7 @@ import styles from "./MyVistory.module.css";
 
 // hooks
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import useAuthenticate from "../../hooks/useAuthenticate";
+import useAuthenticate from "../../hooks/useContexts/useAuthenticate";
 import { useUpdateData } from "../../hooks/useUpdateData";
 import { useFetchDataIBGE } from "../../hooks/useFetchDataIBGE";
 import { useNavigate } from "react-router-dom";

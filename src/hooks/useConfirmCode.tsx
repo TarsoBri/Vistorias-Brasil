@@ -2,49 +2,45 @@ import { useState } from "react";
 
 // Contexts
 import useAuthToUseContext from "./useContexts/useAuthToUseContext";
+import useCodeHashed from "./useContexts/useCodeHashed";
 
 // api
 import { api } from "../Apis/api";
 
-// hooks
-import { useFetchData } from "./useFetchData";
-
 // interfaces
-import { Clients } from "../interfaces/Clients";
 import { ConfigAxios } from "../interfaces/ConfigAxios";
 interface Config extends ConfigAxios {
-  data: Clients;
+  data: {
+    code: string;
+    hashedCode: string;
+  };
 }
 
-export const useCreateData = (url: string) => {
-  const { setData } = useFetchData({ url, order: "news" });
-
+const useConfirmCode = (url: string) => {
   const { tokenAuth } = useAuthToUseContext();
 
+  const [data, setData] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [sucess, setSucess] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const handleCreateClient = async (data: Clients) => {
+  const handleConfirmCode = async (code: string, hashedCode: string) => {
     setLoading(true);
     const config: Config = {
       url,
       method: "post",
-      data,
+      data: { code, hashedCode },
       headers: {
         "Token-Auth": tokenAuth,
       },
     };
     await api
       .request(config)
-      .then((res) => {
-        setData((prevData) => [...prevData, res.data]);
-        setError("");
-        setSucess(true);
-      })
+      .then((res) => setData(res.data))
       .catch((err) => setError(err.response.data))
       .finally(() => setLoading(false));
   };
 
-  return { handleCreateClient, sucess, loading, error };
+  return { handleConfirmCode, data, loading, error };
 };
+
+export default useConfirmCode;

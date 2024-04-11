@@ -9,7 +9,7 @@ import { FaMosquito } from "react-icons/fa6";
 import { MdMenuOpen } from "react-icons/md";
 
 // context
-import useAuthenticate from "../../hooks/useAuthenticate";
+import useAuthenticate from "../../hooks/useContexts/useAuthenticate";
 
 const NavBar = () => {
   const { user, handleModalLogout } = useAuthenticate();

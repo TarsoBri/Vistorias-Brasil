@@ -6,13 +6,16 @@ import "./index.css";
 // contexts
 import { AutheticateProvider } from "./contexts/authenticateContext.tsx";
 import { AuthToUseProvider } from "./contexts/authToUseContext.tsx";
+import { CodeRecoveryProvider } from "./contexts/CodeRecoveryContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthToUseProvider>
-      <AutheticateProvider>
-        <App />
-      </AutheticateProvider>
+      <CodeRecoveryProvider>
+        <AutheticateProvider>
+          <App />
+        </AutheticateProvider>
+      </CodeRecoveryProvider>
     </AuthToUseProvider>
   </React.StrictMode>
 );

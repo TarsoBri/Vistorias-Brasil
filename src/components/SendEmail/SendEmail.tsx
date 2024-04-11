@@ -1,36 +1,39 @@
 import styles from "./SendEmail.module.css";
 
-// Router
-import { Link } from "react-router-dom";
-
 //components
 import Loading from "../Loading/Loading";
 
 // icons
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
 
 // hooks
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useLoginUser } from "../../hooks/useLoginUser";
+import { useState, FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-
+import useSendEmail from "../../hooks/useSendEmail";
 
 const SendEmail = () => {
-  const url = "/clients/login";
+  const url: string = "/sendMailRecovery";
   const navigate = useNavigate();
 
+  const { handleSendEmail, codeHashed, error, loading } = useSendEmail(url);
+
   const [email, setEmail] = useState<string>("");
-  const [emailErro, setEmailErro] = useState<string>("");
 
 
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    if (email != "") {
+      handleSendEmail(email);
+    }
   };
+
+  useEffect(() => {
+    if (codeHashed && codeHashed.code != "") {
+      navigate("/ConfirmCode");
+    }
+  }, [codeHashed!.code]);
 
   return (
     <div className={styles.container}>
@@ -39,8 +42,8 @@ const SendEmail = () => {
           <FaArrowLeftLong />
         </button>
       </div>
-      
-    <h2>Insira seu email para redefinição</h2>
+
+      <h2>Insira seu email para redefinição</h2>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <label>
@@ -51,6 +54,7 @@ const SendEmail = () => {
             placeholder="Insira seu email."
             required
             autoComplete="username"
+            onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
         </label>
@@ -61,11 +65,9 @@ const SendEmail = () => {
         >
           {!loading ? "Enviar" : <Loading />}
         </button>
-        {[error, emailErro].filter(Boolean).length > 0 && (
+        {error && (
           <div className="container_erro">
-            {[error, emailErro].filter(Boolean).map((err, index) => (
-              <p key={index}>{err}</p>
-            ))}
+            <p>{error}</p>
           </div>
         )}
       </form>

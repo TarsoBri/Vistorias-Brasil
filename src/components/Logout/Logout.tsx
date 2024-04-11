@@ -2,7 +2,7 @@ import styles from "./Logout.module.css";
 
 import { useNavigate } from "react-router-dom";
 
-import useAuthenticate from "../../hooks/useAuthenticate";
+import useAuthenticate from "../../hooks/useContexts/useAuthenticate";
 
 const Logout = () => {
   const { user, handleModalLogout } = useAuthenticate();

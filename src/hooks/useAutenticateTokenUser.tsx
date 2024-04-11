@@ -4,8 +4,8 @@ import { useState } from "react";
 import { api } from "../Apis/api";
 
 // Context
-import useAuthToUseContext from "./useAuthToUseContext";
-import useAuthenticate from "./useAuthenticate";
+import useAuthToUseContext from "./useContexts/useAuthToUseContext";
+import useAuthenticate from "./useContexts/useAuthenticate";
 
 // interface
 import { ConfigAxios } from "../interfaces/ConfigAxios";
