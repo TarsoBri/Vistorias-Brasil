@@ -1,8 +1,5 @@
 import styles from "./ConfirmCode.module.css";
 
-// Router
-import { Link } from "react-router-dom";
-
 //components
 import Loading from "../Loading/Loading";
 
@@ -19,20 +16,37 @@ import useConfirmCode from "../../hooks/useConfirmCode";
 import { useChangePassword } from "../../hooks/useChangePassword";
 
 // Interfaces
-import PasswordData from "../../interfaces/PasswordData";
+import { useFetchDataById } from "../../hooks/useFetchDataById";
+import { useLoginUser } from "../../hooks/useLoginUser";
+import { Login } from "../../interfaces/Login";
+import { PasswordDataRecovery } from "../../interfaces/PasswordDataRecovery";
 
 const ConfirmCode = () => {
+  const { codeHashed, setCodeHashed } = useCodeHashed();
+
   const url: string = "/sendMailRecovery/confirm";
-
-  const { codeHashed } = useCodeHashed();
-  const { handleConfirmCode, data, error, loading } = useConfirmCode(url);
-
+  const urlId: string = `/clients/${codeHashed && codeHashed.id}`;
   const urlChangePassword: string = `/clients/changePassword/${
     codeHashed && codeHashed.id
   }`;
+  const urlLogin: string = "/clients/login";
+
+  const { handleConfirmCode, data, error, loading } = useConfirmCode(url);
+
   const navigate = useNavigate();
 
-  const { handleChangePasswordApi } = useChangePassword(urlChangePassword);
+  const {
+    handleChangePasswordApi,
+    sucess,
+    user,
+    erro: errorChangePassword,
+  } = useChangePassword(urlChangePassword);
+  const { handleFetchById, data: client } = useFetchDataById(urlId);
+  const {
+    handleLoginUser,
+    loading: loadingLogin,
+    error: errorlogin,
+  } = useLoginUser(urlLogin);
 
   const [code, setCode] = useState<string>("");
 
@@ -58,6 +72,24 @@ const ConfirmCode = () => {
     }
   };
 
+  useEffect(() => {
+    if (data === "APPROVED") {
+      handleFetchById();
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (sucess) {
+      const userLogin: Login = {
+        email: client!.email,
+        password: password,
+      };
+
+      setCodeHashed(undefined);
+      handleLoginUser(userLogin);
+    }
+  }, [sucess]);
+
   const handleSubmitPassword = (e: FormEvent) => {
     e.preventDefault();
 
@@ -67,20 +99,27 @@ const ConfirmCode = () => {
       setErrorPassword("");
     }
 
-    const passwordData: PasswordData = {
+    if (!client) {
+      return setErrorPassword("Usuário não encontrado!");
+    } else {
+      setErrorPassword("");
+    }
+    const passwordData: PasswordDataRecovery = {
       _id: codeHashed!.id,
-      password,
-      newPassword,
+      password: client!.password,
+      newPassword: password,
+      code: code,
+      hashedCode: codeHashed!.hashedCode,
     };
-
-    handleChangePassword();
+    handleChangePasswordApi(passwordData);
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (codeHashed && codeHashed.code) {
-      handleConfirmCode(code, codeHashed.code);
+    console.log(codeHashed);
+    if (codeHashed && codeHashed.hashedCode) {
+      handleConfirmCode(code, codeHashed.hashedCode);
     }
   };
 
@@ -94,19 +133,19 @@ const ConfirmCode = () => {
 
       <h2>Redefinição de senha</h2>
 
-      {data !== "APPROVED" ? (
+      {data === "APPROVED" ? (
         <>
           <h3>Insira sua nova senha:</h3>
           <form className={styles.form} onSubmit={handleSubmitPassword}>
             <label>
               <span>
-                Senha<span className={styles.mandatoryInput}> *</span>:
+                Nova senha<span className={styles.mandatoryInput}> *</span>:
               </span>
               <div className={styles.password_input}>
                 <input
                   type={passwordVisibility ? "text" : "password"}
                   name="password"
-                  placeholder="Insira sua senha."
+                  placeholder="Insira sua nova senha."
                   required
                   value={password}
                   autoComplete="current-password"
@@ -124,15 +163,16 @@ const ConfirmCode = () => {
 
             <label>
               <span>
-                Confirmar senha<span className={styles.mandatoryInput}> *</span>
-                :
+                Confirmar nova senha
+                <span className={styles.mandatoryInput}> *</span>:
               </span>
               <div className={styles.password_input}>
                 <input
                   type={confirmedPasswordVisibility ? "text" : "password"}
                   name="confirmedPassword"
-                  placeholder="Confirme sua senha."
+                  placeholder="Confirme sua nova senha."
                   required
+                  minLength={8}
                   value={confirmedPassword}
                   autoComplete="current-password"
                   onChange={handleChangePassword}
@@ -150,13 +190,19 @@ const ConfirmCode = () => {
 
             <button
               type="submit"
-              className={!loading ? "submit" : "submit_loading"}
+              className={!loadingLogin ? "submit" : "submit_loading"}
             >
-              {!loading ? "Alterar senha" : <Loading />}
+              {!loadingLogin ? "Alterar senha" : <Loading />}
             </button>
-            {errorPassword && (
+
+            {[errorChangePassword, errorPassword, errorlogin].filter(Boolean)
+              .length > 0 && (
               <div className="container_erro">
-                <p>{errorPassword}</p>
+                {[errorChangePassword, errorPassword, errorlogin]
+                  .filter(Boolean)
+                  .map((err, index) => (
+                    <p key={index}>{err}</p>
+                  ))}
               </div>
             )}
           </form>
@@ -165,17 +211,23 @@ const ConfirmCode = () => {
         <>
           <h3>Insira o código de validação</h3>
 
-          {codeHashed && codeHashed.email && (
-            <p>Código enviado para: {codeHashed.email}</p>
-          )}
-
           <form className={styles.form} onSubmit={handleSubmit}>
+            {codeHashed && codeHashed.email && (
+              <div className={styles.textEmail}>
+                <p>Código enviado para:</p>
+                <p>
+                  <b>{codeHashed.email}</b>
+                </p>
+              </div>
+            )}
+
             <label>
               <span>Código: </span>
               <input
                 type="text"
                 required
                 onChange={(e) => setCode(e.target.value)}
+                maxLength={6}
                 value={code}
               />
             </label>
@@ -186,8 +238,9 @@ const ConfirmCode = () => {
             >
               {!loading ? "Confirmar" : <Loading />}
             </button>
+
             {error && (
-              <div className="container_erro">
+              <div className={"container_erro"}>
                 <p>{error}</p>
               </div>
             )}

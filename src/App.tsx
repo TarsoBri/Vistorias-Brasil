@@ -77,7 +77,7 @@ const App = () => {
               <Route path="/SendEmail" element={<Navigate to="/" />} />
             )}
 
-            {!user  ? (
+            {!user && codeHashed && codeHashed.hashedCode != "" ? (
               <Route path="/ConfirmCode" element={<ConfirmCodePage />} />
             ) : (
               <Route path="/ConfirmCode" element={<Navigate to="/" />} />

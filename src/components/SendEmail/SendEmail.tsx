@@ -19,8 +19,6 @@ const SendEmail = () => {
 
   const [email, setEmail] = useState<string>("");
 
-
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
@@ -30,10 +28,10 @@ const SendEmail = () => {
   };
 
   useEffect(() => {
-    if (codeHashed && codeHashed.code != "") {
+    if (codeHashed && codeHashed.hashedCode != "") {
       navigate("/ConfirmCode");
     }
-  }, [codeHashed!.code]);
+  }, [codeHashed]);
 
   return (
     <div className={styles.container}>

@@ -17,7 +17,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { Address } from "../../interfaces/Address";
 import { Clients } from "../../interfaces/Clients";
 import Loading from "../Loading/Loading";
-import PasswordData from "../../interfaces/PasswordData";
+import { PasswordData } from "../../interfaces/PasswordData";
 
 const SurveryorDataComponent = () => {
   const initialAddressState: Address = {
@@ -155,7 +155,7 @@ const SurveryorDataComponent = () => {
       newPassword,
     };
 
-    setSucessChangePassword("");
+    setSucessChangePassword(false);
     setErroChangePassword("");
 
     handleChangePasswordApi(passwordData);
@@ -215,7 +215,7 @@ const SurveryorDataComponent = () => {
 
       {sucessChangePassword && (
         <div className={styles.container_notification}>
-          <button onClick={() => setSucessChangePassword("")}>X</button>
+          <button onClick={() => setSucessChangePassword(false)}>X</button>
           <p>{sucessChangePassword}</p>
         </div>
       )}

@@ -3,7 +3,7 @@ export interface Clients {
   surveyor?: boolean;
   email: string;
   phone: string;
-  password: string;
+  password?: string;
   firstName: string;
   status?: boolean;
   address: {

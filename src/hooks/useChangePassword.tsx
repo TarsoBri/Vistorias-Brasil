@@ -7,11 +7,12 @@ import useAuthenticate from "./useContexts/useAuthenticate";
 
 // Interfaces
 import { ConfigAxios } from "../interfaces/ConfigAxios";
-import PasswordData from "../interfaces/PasswordData";
+import { PasswordData } from "../interfaces/PasswordData";
+import { PasswordDataRecovery } from "../interfaces/PasswordDataRecovery";
 interface Config extends ConfigAxios {
   data: {
     update_at: string;
-    password: string;
+    password: string | undefined;
     newPassword: string;
   };
 }
@@ -21,11 +22,13 @@ export const useChangePassword = (url: string) => {
 
   const { tokenAuth } = useAuthToUseContext();
 
-  const [sucess, setSucess] = useState<string>("");
   const [erro, setErro] = useState<string>("");
+  const [sucess, setSucess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChangePasswordApi = async (data: PasswordData) => {
+  const handleChangePasswordApi = async (
+    data: PasswordData | PasswordDataRecovery
+  ) => {
     setLoading(true);
 
     const config: Config = {
@@ -42,20 +45,25 @@ export const useChangePassword = (url: string) => {
 
     await api
       .request(config)
-      .then((res) => {
-        if (user && user._id === data._id) {
-          setUser(res.data);
-          setErro("");
-          setSucess("Senha alterada com sucesso!");
-        }
+      .then(() => {
+        setErro("");
+        setSucess(true);
       })
       .catch((err) => {
         console.log(err);
-        setSucess("");
+        setSucess(false);
         setErro(err.response.data);
       })
       .finally(() => setLoading(false));
   };
 
-  return { handleChangePasswordApi, sucess, setSucess, loading, erro, setErro };
+  return {
+    handleChangePasswordApi,
+    user,
+    sucess,
+    setSucess,
+    loading,
+    erro,
+    setErro,
+  };
 };

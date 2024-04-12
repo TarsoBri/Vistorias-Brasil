@@ -9,13 +9,13 @@
     }
 
 
-
     .form {
         margin: auto;
         max-width: 400px;
         display: flex;
-        gap: 2em;
         flex-direction: column;
+
+
 
         .recovery_link {
             a {
@@ -28,9 +28,14 @@
             }
         }
 
+        button {
+            margin-block: 2em;
+        }
+
         label {
             display: flex;
             flex-direction: column;
+            margin-top: 2em;
 
             span {
                 margin-bottom: 10px;
@@ -48,6 +53,7 @@
                     font-size: .6em;
                 }
             }
+
 
             .password_input {
                 display: flex;

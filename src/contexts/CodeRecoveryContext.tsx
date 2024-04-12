@@ -11,7 +11,7 @@ interface Props {
   children: ReactNode;
 }
 interface Code {
-  code: string;
+  hashedCode: string;
   email: string;
   id: string;
 }

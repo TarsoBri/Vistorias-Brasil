@@ -8,7 +8,7 @@ import useAuthenticate from "./useContexts/useAuthenticate";
 // interfaces
 import { ConfigAxios } from "../interfaces/ConfigAxios";
 import { Clients } from "../interfaces/Clients";
-import UpdateStatus from "../interfaces/UpdateStatus";
+import { UpdateStatus } from "../interfaces/UpdateStatus";
 interface Config extends ConfigAxios {
   data: Clients | UpdateStatus;
 }

@@ -1,6 +1,6 @@
 import { Clients } from "./Clients";
 
-export default interface UpdateStatus
+export interface UpdateStatus
   extends Omit<
     Clients,
     "email" | "phone" | "firstName" | "password" | "address"

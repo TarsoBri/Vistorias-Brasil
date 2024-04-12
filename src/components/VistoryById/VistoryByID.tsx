@@ -12,7 +12,7 @@ import { useFetchDataById } from "../../hooks/useFetchDataById";
 import { useUpdateData } from "../../hooks/useUpdateData";
 
 // interface
-import UpdateStatus from "../../interfaces/UpdateStatus";
+import { UpdateStatus } from "../../interfaces/UpdateStatus";
 
 import { useNavigate } from "react-router-dom";
 interface Props {

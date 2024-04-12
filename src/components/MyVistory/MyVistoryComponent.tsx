@@ -19,7 +19,7 @@ import Loading from "../Loading/Loading";
 // Interfaces
 import { Address } from "../../interfaces/Address";
 import { Clients } from "../../interfaces/Clients";
-import PasswordData from "../../interfaces/PasswordData";
+import { PasswordData } from "../../interfaces/PasswordData";
 
 const MyVistoryComponent = () => {
   const { user } = useAuthenticate();
@@ -159,7 +159,7 @@ const MyVistoryComponent = () => {
       newPassword,
     };
 
-    setSucessChangePassword("");
+    setSucessChangePassword(false);
     setErroChangePassword("");
 
     handleChangePasswordApi(passwordData);
@@ -176,7 +176,6 @@ const MyVistoryComponent = () => {
     const formData: Clients = {
       _id: user!._id,
       firstName,
-      password,
       email,
       status,
       phone,
@@ -210,8 +209,8 @@ const MyVistoryComponent = () => {
 
       {sucessChangePassword && (
         <div className={styles.container_notification}>
-          <button onClick={() => setSucessChangePassword("")}>X</button>
-          <p>{sucessChangePassword}</p>
+          <button onClick={() => setSucessChangePassword(false)}>X</button>
+          <p>Senha alterada com sucesso!</p>
         </div>
       )}
 
