@@ -16,7 +16,7 @@ interface Config extends ConfigAxios {
 export const useUpdateData = (url: string | undefined) => {
   const { tokenAuth } = useAuthToUseContext();
 
-  const { user, setUser } = useAuthenticate();
+  const { user, setUser, keyToken } = useAuthenticate();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -31,6 +31,7 @@ export const useUpdateData = (url: string | undefined) => {
         data: data,
         headers: {
           "Token-Auth": tokenAuth,
+          "Login-Auth": keyToken.token,
         },
       };
 

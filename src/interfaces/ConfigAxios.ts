@@ -3,6 +3,6 @@ export interface ConfigAxios {
   method: string;
   headers: {
     "Token-Auth": string;
-    Surveryor?: string;
+    "Login-Auth"?: string;
   };
 }
