@@ -79,6 +79,7 @@ const MyVistoryComponent = () => {
       setEmail(user.email);
       setPhone(user.phone);
       setAddress(user.address);
+      setStatus(user.status);
     }
   }, [user]);
 
@@ -298,6 +299,7 @@ const MyVistoryComponent = () => {
                     minLength={8}
                     value={address.CEP}
                     onChange={handleChangeUpdate}
+                    disabled={status && true}
                   />
                 </label>
 
@@ -308,7 +310,7 @@ const MyVistoryComponent = () => {
                     required
                     value={address.state}
                     onChange={handleChangeUpdate}
-                    disabled={loadingStatesIBGE && true}
+                    disabled={loadingStatesIBGE || (status && true)}
                   >
                     <option value="">Selecione seu estado.</option>
                     {statesIBGE &&
@@ -329,6 +331,7 @@ const MyVistoryComponent = () => {
                     required
                     value={address.city}
                     onChange={handleChangeUpdate}
+                    disabled={status && true}
                   />
                 </label>
 
@@ -341,6 +344,7 @@ const MyVistoryComponent = () => {
                     required
                     value={address.road}
                     onChange={handleChangeUpdate}
+                    disabled={status && true}
                   />
                 </label>
 
@@ -354,6 +358,7 @@ const MyVistoryComponent = () => {
                       address.number && address.number > 0 ? address.number : ""
                     }
                     onChange={handleChangeUpdate}
+                    disabled={status && true}
                   />
                 </label>
 
@@ -365,8 +370,15 @@ const MyVistoryComponent = () => {
                     placeholder="Insira sua referência."
                     value={address.reference}
                     onChange={handleChangeUpdate}
+                    disabled={status && true}
                   />
                 </label>
+                {status && (
+                  <p className={styles.warning_status}>
+                    Vistoria já realizada. Portanto, não é mais possível alterar
+                    o seu endereço cadastrado. Obrigado!
+                  </p>
+                )}
                 <div className={styles.div_update_btn}>
                   <div>
                     <p>Cadastrado: {user.created_at}</p>

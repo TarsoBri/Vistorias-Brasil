@@ -13,6 +13,9 @@ import { useAutenticateTokenUser } from "../hooks/useAutenticateTokenUser";
 // SessionStorage
 import { useLocalStorage } from "@uidotdev/usehooks";
 
+// decode
+import { JwtPayload, jwtDecode } from "jwt-decode";
+
 //Interfaces
 import { Clients } from "../interfaces/Clients";
 
@@ -46,6 +49,29 @@ export const AutheticateProvider = ({ children }: Props) => {
   useEffect(() => {
     authorizeToken(keyToken.token);
   }, [keyToken.token]);
+
+  useEffect(() => {
+    handleExpiredUser(keyToken.token);
+  }, []);
+
+  const handleExpiredUser = (token: string) => {
+    if (token != "") {
+      const currentTime: number = Date.now() / 1000;
+      const decodedToken: JwtPayload = jwtDecode(token);
+      const expirationTime: number | undefined =
+        decodedToken.iat && decodedToken.iat + 3600;
+
+      const resultTime: number | undefined =
+        expirationTime &&
+        Number(((expirationTime - currentTime) * 1000).toFixed(0));
+        
+      setTimeout(() => {
+        setUser(undefined);
+        setKeyToken({ token: "" });
+        alert("Login expirado!");
+      }, resultTime);
+    }
+  };
 
   useEffect(() => {
     if (data) {

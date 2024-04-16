@@ -52,6 +52,8 @@ const ConfirmCode = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [confirmedPasswordVisibility, setConfirmedPasswordVisibility] =
     useState(false);
+  const [textLoginExecuted, setTextLoginExecuted] =
+    useState<string>("Fazendo Login");
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -70,19 +72,33 @@ const ConfirmCode = () => {
 
   useEffect(() => {
     if (sucess) {
-      const userLogin: Login = {
-        email: codeHashed!.email,
-        password: password,
-      };
-
-      handleLoginUser(userLogin);
-      setCodeHashed(undefined);
+      handleChangeTextLoginExecuted();
+      setTimeout(() => {
+        const userLogin: Login = {
+          email: codeHashed!.email,
+          password: password,
+        };
+        handleLoginUser(userLogin);
+        setCodeHashed(undefined);
+      }, 3500);
     }
   }, [sucess]);
 
+  const handleChangeTextLoginExecuted = () => {
+    if (!textLoginExecuted.includes("...")) {
+      for (let i: number = 0; i < 3; i++) {
+        ((i) => {
+          setTimeout(() => {
+            console.log(i);
+            setTextLoginExecuted((prev) => prev + ".");
+          }, 1000 * i);
+        })(i);
+      }
+    }
+  };
+
   const handleSubmitPassword = (e: FormEvent) => {
     e.preventDefault();
-
     if (password !== confirmedPassword) {
       return setErrorPassword("Senhas diferentes!");
     } else {
@@ -175,7 +191,7 @@ const ConfirmCode = () => {
               type="submit"
               className={!loadingLogin ? "submit" : "submit_loading"}
             >
-              {!loadingLogin ? "Alterar senha" : <Loading />}
+              {!loadingLogin ? "Alterar senha e entrar" : <Loading />}
             </button>
 
             {[errorChangePassword, errorPassword, errorlogin].filter(Boolean)
@@ -186,6 +202,13 @@ const ConfirmCode = () => {
                   .map((err, index) => (
                     <p key={index}>{err}</p>
                   ))}
+              </div>
+            )}
+
+            {sucess && (
+              <div className={styles.container_sucess}>
+                <p>Senha alterada com sucesso!</p>
+                <p>{textLoginExecuted}</p>
               </div>
             )}
           </form>

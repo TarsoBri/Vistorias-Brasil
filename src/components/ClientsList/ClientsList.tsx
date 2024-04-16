@@ -69,45 +69,46 @@ const ClientsList = () => {
 
   return (
     <div className={styles.clients_container}>
-      <h2>Vistorias pelo Brasil</h2>
+      <h3>Filtragem:</h3>
+      <div className={styles.filters}>
+        <label>
+          <span>Ordenar por dia: </span>
+          <select name="order" onChange={handleOrder}>
+            <option value="news">Mais recente</option>
+            <option value="olds">Menos recente</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Status: </span>
+          <select name="filter" onChange={handleOrder}>
+            <option value="every">Todas</option>
+            <option value="done">Realiazadas</option>
+            <option value="notDone">Não realiazadas</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Selecione um estado: </span>
+          <select
+            disabled={!loadingStates ? false : true}
+            name="orderState"
+            onChange={handleOrder}
+          >
+            <option value="">
+              {!loadingStates ? "Selecione" : "Aguarde..."}
+            </option>
+            {states &&
+              states.map((state) => (
+                <option key={state.id} value={state.sigla}>
+                  {state.nome}
+                </option>
+              ))}
+          </select>
+        </label>
+      </div>
       {!error ? (
         <>
-          <h3>Filtragem:</h3>
-          <div className={styles.filters}>
-            <label>
-              <span>Ordenar por dia: </span>
-              <select name="order" onChange={handleOrder}>
-                <option value="news">Mais recente</option>
-                <option value="olds">Menos recente</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Status: </span>
-              <select name="filter" onChange={handleOrder}>
-                <option value="every">Todas</option>
-                <option value="done">Realiazadas</option>
-                <option value="notDone">Não realiazadas</option>
-              </select>
-            </label>
-
-            <label>
-              <span>Selecione um estado: </span>
-              <select
-                disabled={!loadingStates ? false : true}
-                name="orderState"
-                onChange={handleOrder}
-              >
-                <option value="">Nenhum</option>
-                {states &&
-                  states.map((state) => (
-                    <option key={state.id} value={state.sigla}>
-                      {state.nome}
-                    </option>
-                  ))}
-              </select>
-            </label>
-          </div>
           {!loading ? (
             <>
               {users.length > 0 ? (

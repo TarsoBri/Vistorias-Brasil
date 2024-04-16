@@ -49,7 +49,7 @@ const VistoryByID = ({ id }: Props) => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       {!error || !errorFetch ? (
         <>
           {user && (
@@ -89,49 +89,53 @@ const VistoryByID = ({ id }: Props) => {
                     : "Vistoria não realizada!"}
                 </p>
               </div>
-              {!loadingFetch ? (
-                <div>
-                  <div className={styles.userData_content}>
-                    <h3>Dados de contato:</h3>
-                    <p>
-                      <span>Email:</span> {user.email}
-                    </p>
-                    <p>
-                      <span>Telefone:</span> {user.phone}
-                    </p>
+              <div>
+                <div className={styles.userData_content}>
+                  <h3>Dados de contato:</h3>
+                  <p>
+                    <span>Email:</span> {user.email}
+                  </p>
+                  <p>
+                    <span>Telefone:</span> {user.phone}
+                  </p>
 
-                    <h3>Endereço da residência:</h3>
+                  <h3>Endereço da residência:</h3>
+                  <p>
+                    <span>CEP:</span> {user.address.CEP}
+                  </p>
+                  <p>
+                    <span>Cidade:</span> {user.address.city}
+                  </p>
+                  <p>
+                    <span>Estado:</span> {user.address.state}
+                  </p>
+                  <p>
+                    <span>Rua:</span> {user.address.road}
+                    {user.address.number && `, nº ${user.address.number}`}
+                  </p>
+                  {user.address.reference && (
                     <p>
-                      <span>CEP:</span> {user.address.CEP}
+                      <span>Referência:</span> {user.address.reference}
                     </p>
-                    <p>
-                      <span>Cidade:</span> {user.address.city}
-                    </p>
-                    <p>
-                      <span>Estado:</span> {user.address.state}
-                    </p>
-                    <p>
-                      <span>Rua:</span> {user.address.road}
-                      {user.address.number && `, nº ${user.address.number}`}
-                    </p>
-                    {user.address.reference && (
-                      <p>
-                        <span>Referência:</span> {user.address.reference}
-                      </p>
-                    )}
-                  </div>
+                  )}
                 </div>
-              ) : (
-                <div className="loading">
-                  <div className="opacity"></div>
-                  <Loading />
-                </div>
-              )}
+              </div>
             </div>
           )}
         </>
       ) : (
         <p>Erro ao carregar Vistoria</p>
+      )}
+
+      {loadingFetch && (
+        <div className={styles.loader}>
+          <div className={styles.opacity}></div>
+          <div className={styles.loader_icon}>
+            <div className={styles.icon}>
+              <Loading />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

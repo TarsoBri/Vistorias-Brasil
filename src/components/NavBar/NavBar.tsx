@@ -34,7 +34,7 @@ const NavBar = () => {
 
         <ul className={styles.routes}>
           <li onClick={menuFunc}>
-            <NavLink to="/">Início</NavLink>
+            <NavLink to="/">Vistorias</NavLink>
           </li>
           {user && user.surveyor !== true && (
             <li onClick={menuFunc}>

@@ -109,6 +109,10 @@
             }
         }
 
+        .warning_status {
+            margin: 0;
+            opacity: .6;
+        }
 
         .div_update_btn {
             display: flex;

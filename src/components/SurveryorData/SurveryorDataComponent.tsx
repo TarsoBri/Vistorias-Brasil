@@ -216,7 +216,7 @@ const SurveryorDataComponent = () => {
       {sucessChangePassword && (
         <div className={styles.container_notification}>
           <button onClick={() => setSucessChangePassword(false)}>X</button>
-          <p>{sucessChangePassword}</p>
+          <p>Senha alterada com sucesso!</p>
         </div>
       )}
 
