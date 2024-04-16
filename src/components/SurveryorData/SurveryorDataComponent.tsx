@@ -340,7 +340,7 @@ const SurveryorDataComponent = () => {
                 <div className={styles.div_update_btn}>
                   <div>
                     <p>Cadastrado: {user.created_at}</p>
-                    {user.update_at && <p>Editado: {user.update_at}</p>}
+                    {user.update_at && <p>Alterações: {user.update_at}</p>}
                   </div>
 
                   <button type="submit" className={styles.update_btn}>

@@ -9,9 +9,11 @@ import { api } from "../Apis/api";
 // Interfaces
 import { Clients } from "../interfaces/Clients";
 import { ConfigAxios } from "../interfaces/ConfigAxios";
+import useAuthenticate from "./useContexts/useAuthenticate";
 
 export const useFetchDataById = (url: string) => {
   const { tokenAuth } = useAuthToUseContext();
+  const { keyToken } = useAuthenticate();
 
   const [data, setData] = useState<Clients>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,11 +27,12 @@ export const useFetchDataById = (url: string) => {
       method: "get",
       headers: {
         "Token-Auth": tokenAuth,
+        "Login-Auth": keyToken.token,
       },
     };
     await api
       .request(config)
-      .then((res) => setData(res.data[0]))
+      .then((res) => setData(res.data))
       .catch((err) => setError(`Erro na API: ${err.message}`));
     setLoading(false);
   };

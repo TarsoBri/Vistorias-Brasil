@@ -14,10 +14,9 @@ import { useNavigate } from "react-router-dom";
 import useCodeHashed from "../../hooks/useContexts/useCodeHashed";
 import useConfirmCode from "../../hooks/useConfirmCode";
 import { useChangePassword } from "../../hooks/useChangePassword";
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 // Interfaces
-import { useFetchDataById } from "../../hooks/useFetchDataById";
-import { useLoginUser } from "../../hooks/useLoginUser";
 import { Login } from "../../interfaces/Login";
 import { PasswordDataRecovery } from "../../interfaces/PasswordDataRecovery";
 
@@ -25,7 +24,6 @@ const ConfirmCode = () => {
   const { codeHashed, setCodeHashed } = useCodeHashed();
 
   const url: string = "/sendMailRecovery/confirm";
-  const urlId: string = `/clients/${codeHashed && codeHashed.id}`;
   const urlChangePassword: string = `/clients/changePassword/${
     codeHashed && codeHashed.id
   }`;
@@ -38,10 +36,8 @@ const ConfirmCode = () => {
   const {
     handleChangePasswordApi,
     sucess,
-    user,
     erro: errorChangePassword,
   } = useChangePassword(urlChangePassword);
-  const { handleFetchById, data: client } = useFetchDataById(urlId);
   const {
     handleLoginUser,
     loading: loadingLogin,
@@ -73,20 +69,14 @@ const ConfirmCode = () => {
   };
 
   useEffect(() => {
-    if (data === "APPROVED") {
-      handleFetchById();
-    }
-  }, [data]);
-
-  useEffect(() => {
     if (sucess) {
       const userLogin: Login = {
-        email: client!.email,
+        email: codeHashed!.email,
         password: password,
       };
 
-      setCodeHashed(undefined);
       handleLoginUser(userLogin);
+      setCodeHashed(undefined);
     }
   }, [sucess]);
 
@@ -99,17 +89,11 @@ const ConfirmCode = () => {
       setErrorPassword("");
     }
 
-    if (!client) {
-      return setErrorPassword("Usuário não encontrado!");
-    } else {
-      setErrorPassword("");
-    }
     const passwordData: PasswordDataRecovery = {
-      _id: codeHashed!.id,
-      password: client!.password,
       newPassword: password,
       code: code,
       hashedCode: codeHashed!.hashedCode,
+      update_at: new Date().toLocaleString(),
     };
     handleChangePasswordApi(passwordData);
   };
@@ -117,7 +101,6 @@ const ConfirmCode = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(codeHashed);
     if (codeHashed && codeHashed.hashedCode) {
       handleConfirmCode(code, codeHashed.hashedCode);
     }

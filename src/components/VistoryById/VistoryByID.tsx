@@ -9,7 +9,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 // hooks
 import { useEffect } from "react";
 import { useFetchDataById } from "../../hooks/useFetchDataById";
-import { useUpdateData } from "../../hooks/useUpdateData";
+import { useUpdateStatus } from "../../hooks/useUpdateStatus";
 
 // interface
 import { UpdateStatus } from "../../interfaces/UpdateStatus";
@@ -21,6 +21,7 @@ interface Props {
 
 const VistoryByID = ({ id }: Props) => {
   const urlId = `/clients/${id}`;
+  const urlChangeStatus = `/clients/status/${id}`;
 
   const navigate = useNavigate();
 
@@ -31,18 +32,20 @@ const VistoryByID = ({ id }: Props) => {
     data: user,
   } = useFetchDataById(urlId);
 
-  const { handleUpdateData, loading, error } = useUpdateData(urlId);
+  const { handleUpdateStatus, sucess, error } =
+    useUpdateStatus(urlChangeStatus);
 
   useEffect(() => {
     handleFetchById();
-  }, [urlId, loading]);
+  }, [urlId, sucess]);
 
   const handleChange = () => {
     const updateData: UpdateStatus = {
       status: user && !user.status,
+      update_at: new Date().toLocaleString(),
     };
     console.log(updateData);
-    handleUpdateData(updateData);
+    handleUpdateStatus(updateData);
   };
 
   return (
