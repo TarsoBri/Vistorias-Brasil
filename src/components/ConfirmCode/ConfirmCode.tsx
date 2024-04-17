@@ -89,7 +89,6 @@ const ConfirmCode = () => {
       for (let i: number = 0; i < 3; i++) {
         ((i) => {
           setTimeout(() => {
-            console.log(i);
             setTextLoginExecuted((prev) => prev + ".");
           }, 1000 * i);
         })(i);

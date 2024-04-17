@@ -25,18 +25,20 @@ const Logout = () => {
             {user.firstName}, tem certeza que deseja sair como vistoriador?
           </h3>
         )}
-        <button
-          className="submit"
-          onClick={() => {
-            handleModalLogout(true);
-            navigate("/");
-          }}
-        >
-          Sim
-        </button>
-        <button className="button1" onClick={() => handleModalLogout(false)}>
-          Não
-        </button>
+        <div className={styles.logout_container_buttons}>
+          <button
+            className="submit"
+            onClick={() => {
+              handleModalLogout(true);
+              navigate("/");
+            }}
+          >
+            Sim
+          </button>
+          <button className="button1" onClick={() => handleModalLogout(false)}>
+            Não
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 .form_div {
     width: 90vw;
-    max-width: 600px;
+    max-width: 700px;
 
     h2 {
         text-align: center;
@@ -9,7 +9,7 @@
 
     .form {
         margin: auto;
-        max-width: 400px;
+        max-width: 500px;
         display: flex;
         gap: 2em;
         flex-direction: column;

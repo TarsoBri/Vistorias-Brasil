@@ -39,7 +39,6 @@ export const useChangePassword = (url: string) => {
         setSucess(true);
       })
       .catch((err) => {
-        console.log(err);
         setErro(err.response.data);
       })
       .finally(() => setLoading(false));

@@ -24,7 +24,6 @@ export const CodeRecovery = createContext<Context | undefined>(undefined);
 
 export const CodeRecoveryProvider = ({ children }: Props) => {
   const [codeHashed, setCodeHashed] = useState<Code | undefined>(undefined);
-  console.log(codeHashed);
   return (
     <CodeRecovery.Provider value={{ codeHashed, setCodeHashed }}>
       {children}

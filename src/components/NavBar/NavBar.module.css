@@ -53,13 +53,13 @@
             display: block;
             background-color: transparent;
             border: none;
-            font-size: 12px;
             cursor: pointer;
             color: white;
             text-decoration: none;
             transition: all .2s;
             padding: 1.5em 1em;
-            text-shadow: rgba(0, 0, 0, 0.522) 0.1em 0.1em 0.2em
+            text-shadow: rgba(0, 0, 0, 0.522) 0.1em 0.1em 0.2em;
+            font-size: .8em;
         }
 
     }
@@ -104,7 +104,12 @@
                 text-align: end;
                 width: 100%;
                 transition: all .2s;
+
+                a {
+                    font-size: .7em;
+                }
             }
+
 
             li:hover,
             .logout:hover {

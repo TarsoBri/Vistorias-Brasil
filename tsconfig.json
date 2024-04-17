@@ -6,10 +6,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    // Routes
-    "rootDir": "./src",
-    "outDir": "./dist",
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

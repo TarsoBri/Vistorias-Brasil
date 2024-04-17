@@ -1,187 +1,191 @@
 .container {
     position: relative;
-    max-width: 600px;
+    max-width: 700px;
     width: 90vw;
 
-    h2 {
-        text-align: center;
-        margin-block: 1.5em;
-    }
+    .container_data {
+        margin-top: 5em;
 
-    .container_notification,
-    .container_notificationError {
-        margin-bottom: 1em;
-        display: flex;
-        color: black;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        border: solid rgb(0, 69, 0) 2px;
-        background-color: rgb(161, 255, 161);
-        position: relative;
-
-        button {
-            background-color: transparent;
-            border: none;
-            font-size: 1.2em;
-            color: black;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: .5em;
-            cursor: pointer;
-            transition: all .2s;
+        h2 {
+            text-align: center;
+            margin-block: 1.5em;
         }
 
-        button:hover {
-            color: rgb(0, 195, 0);
-        }
-    }
-
-    .container_notificationError {
-        background-color: rgb(245, 111, 111);
-        border: 2px solid red;
-
-
-        button:hover {
-            color: rgb(171, 0, 0);
-        }
-    }
-
-    .status {
-        display: flex;
-        align-items: center;
-        display: inline-block;
-        background-color: rgb(127, 132, 171);
-        padding: 0 1em;
-        margin-left: 1em;
-        border-radius: 20px 20px 0 0;
-        font-size: .9em;
-
-        span {
-            color: white;
-        }
-    }
-
-    .form {
-        display: flex;
-        gap: 2em;
-        flex-direction: column;
-        margin-bottom: 5em;
-        background-color: rgb(94, 104, 177);
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.377);
-        padding: 2em;
-        border-radius: 5px;
-
-        h3 {
-            color: white;
-            margin: 0;
-            margin-top: 1em;
-        }
-
-        label {
+        .container_notification,
+        .container_notificationError {
+            margin-bottom: 1em;
             display: flex;
+            color: black;
+            justify-content: center;
             align-items: center;
-            font-size: 1.2em;
+            border-radius: 5px;
+            border: solid rgb(0, 69, 0) 2px;
+            background-color: rgb(161, 255, 161);
+            position: relative;
 
-            input,
-            select {
-                margin-left: 5px;
-                color: white;
-                font-size: .8em;
-                padding: .5em;
-                width: 100%;
-                border: none;
-                cursor: pointer;
+            button {
                 background-color: transparent;
                 border: none;
-                border-bottom: 1px solid white;
-
-                option {
-                    font-size: .9em;
-                    color: black;
-                }
-
+                font-size: 1.2em;
+                color: black;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: .5em;
+                cursor: pointer;
+                transition: all .2s;
             }
 
-            input::placeholder {
-                color: rgb(193, 192, 192);
+            button:hover {
+                color: rgb(0, 195, 0);
             }
         }
 
-        .warning_status {
-            margin: 0;
-            opacity: .6;
+        .container_notificationError {
+            background-color: rgb(245, 111, 111);
+            border: 2px solid red;
+
+
+            button:hover {
+                color: rgb(171, 0, 0);
+            }
         }
 
-        .div_update_btn {
+        .status {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            display: inline-block;
+            background-color: rgb(127, 132, 171);
+            padding: 0 1em;
+            margin-left: 1em;
+            border-radius: 20px 20px 0 0;
+            font-size: .9em;
 
-            p {
-                color: rgba(255, 255, 255, 0.857);
-                font-size: .8em;
+            span {
+                color: white;
             }
-
         }
 
-        .update_btn {
-            margin-left: 10px;
-            color: white;
-            background-color: rgb(100, 105, 143);
-            height: 40px;
-            font-size: 1em;
-            width: 150px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            transition: all .2s;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.685);
-        }
-
-        .update_btn:hover {
-            background-color: rgb(107, 115, 170);
-        }
-
-        .password_form {
+        .form {
             display: flex;
             gap: 2em;
             flex-direction: column;
+            margin-bottom: 5em;
+            background-color: rgb(94, 104, 177);
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.377);
+            padding: 2em;
+            border-radius: 5px;
 
+            h3 {
+                color: white;
+                margin: 0;
+                margin-top: 1em;
+            }
 
-
-            .password_input {
+            label {
                 display: flex;
                 align-items: center;
-                border-radius: 5px;
+                font-size: 1.2em;
 
-
-                input {
-                    width: 90%;
-                    box-shadow: none;
-                    margin-right: 5px;
-                }
-
-                span {
-                    width: 10%;
+                input,
+                select {
+                    margin-left: 5px;
                     color: white;
-                    font-size: 1em;
-                    margin: 0;
-                    text-align: center;
+                    font-size: .8em;
+                    padding: .5em;
+                    width: 100%;
+                    border: none;
                     cursor: pointer;
-                    transition: all .2s;
+                    background-color: transparent;
+                    border: none;
+                    border-bottom: 1px solid white;
+
+                    option {
+                        font-size: .9em;
+                        color: black;
+                    }
+
                 }
 
-                span:hover {
-                    color: #a1a1a1;
-
+                input::placeholder {
+                    color: rgb(193, 192, 192);
                 }
             }
 
-            .div_updatePassword_btn {
+            .warning_status {
+                margin: 0;
+                opacity: .6;
+            }
+
+            .div_update_btn {
                 display: flex;
-                justify-content: end;
+                justify-content: space-between;
+                align-items: center;
+
+                p {
+                    color: rgba(255, 255, 255, 0.857);
+                    font-size: .8em;
+                }
+
+            }
+
+            .update_btn {
+                margin-left: 10px;
+                color: white;
+                background-color: rgb(100, 105, 143);
+                height: 40px;
+                font-size: 1em;
+                width: 150px;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                transition: all .2s;
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.685);
+            }
+
+            .update_btn:hover {
+                background-color: rgb(107, 115, 170);
+            }
+
+            .password_form {
+                display: flex;
+                gap: 2em;
+                flex-direction: column;
+
+
+
+                .password_input {
+                    display: flex;
+                    align-items: center;
+                    border-radius: 5px;
+
+
+                    input {
+                        width: 90%;
+                        box-shadow: none;
+                        margin-right: 5px;
+                    }
+
+                    span {
+                        width: 10%;
+                        color: white;
+                        font-size: 1em;
+                        margin: 0;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all .2s;
+                    }
+
+                    span:hover {
+                        color: #a1a1a1;
+
+                    }
+                }
+
+                .div_updatePassword_btn {
+                    display: flex;
+                    justify-content: end;
+                }
             }
         }
     }

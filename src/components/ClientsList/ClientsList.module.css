@@ -1,5 +1,5 @@
 .clients_container {
-    max-width: 600px;
+    max-width: 700px;
     width: 90vw;
     margin-block: 2em 5em;
 
@@ -108,6 +108,9 @@
 
 @media (min-width: 600px) {
     .clients_container {
+        .clients {
+            font-size: 14px;
+        }
 
         .filters {
             flex-direction: row;

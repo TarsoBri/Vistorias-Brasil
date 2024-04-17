@@ -198,264 +198,271 @@ const MyVistoryComponent = () => {
           <FaArrowLeftLong />
         </button>
       </div>
-      <h2>Sua vistoria atual</h2>
-      <div id="notification" className="hide">
-        <div className={styles.container_notification}>
-          <button onClick={() => container_notification?.classList.add("hide")}>
-            X
-          </button>
-          <p>Alterações salvas com sucesso!</p>
+      <div className={styles.container_data}>
+        <div id="notification" className="hide">
+          <div className={styles.container_notification}>
+            <button
+              onClick={() => container_notification?.classList.add("hide")}
+            >
+              X
+            </button>
+            <p>Alterações salvas com sucesso!</p>
+          </div>
         </div>
-      </div>
 
-      {sucessChangePassword && (
-        <div className={styles.container_notification}>
-          <button onClick={() => setSucessChangePassword(false)}>X</button>
-          <p>Senha alterada com sucesso!</p>
-        </div>
-      )}
+        {sucessChangePassword && (
+          <div className={styles.container_notification}>
+            <button onClick={() => setSucessChangePassword(false)}>X</button>
+            <p>Senha alterada com sucesso!</p>
+          </div>
+        )}
 
-      {erroChangePassword && (
-        <div className={styles.container_notificationError}>
-          <button onClick={() => setErroChangePassword("")}>X</button>
-          <p>{erroChangePassword}</p>
-        </div>
-      )}
+        {erroChangePassword && (
+          <div className={styles.container_notificationError}>
+            <button onClick={() => setErroChangePassword("")}>X</button>
+            <p>{erroChangePassword}</p>
+          </div>
+        )}
 
-      {error && (
-        <div className={styles.container_notificationError}>
-          <button onClick={() => setError("")}>X</button>
-          <p>{error}</p>
-        </div>
-      )}
+        {error && (
+          <div className={styles.container_notificationError}>
+            <button onClick={() => setError("")}>X</button>
+            <p>{error}</p>
+          </div>
+        )}
 
-      {!loading ? (
-        <>
-          {user && (
-            <>
-              <div className={styles.status}>
-                <p
-                  style={{
-                    color: user.status ? "rgb(45, 220, 15)" : "rgb(167, 0, 0)",
-                  }}
-                >
-                  <span>Status:</span>
-                  {user.status
-                    ? " Vistoria realizada!"
-                    : " Vistoria não realizada!"}
-                </p>
-              </div>
-              <form className={styles.form} onSubmit={handleSubmitUpdateUser}>
-                <h3>Seus dados:</h3>
-
-                <label>
-                  <span>Nome: </span>
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="Insira seu nome."
-                    required
-                    value={firstName}
-                    onChange={handleChangeUpdate}
-                  />
-                </label>
-
-                <label>
-                  <span>Email: </span>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Insira seu email."
-                    required
-                    autoComplete="username"
-                    value={email}
-                    onChange={handleChangeUpdate}
-                  />
-                </label>
-
-                <label>
-                  <span>Telefone: </span>
-                  <input
-                    type="text"
-                    value={phone}
-                    required
-                    placeholder="Digite seu telefone"
-                    minLength={14}
-                    maxLength={15}
-                    onChange={handleChangePhone}
-                  />
-                </label>
-
-                <h3>Seu endereço:</h3>
-
-                <label>
-                  <span>CEP: </span>
-                  <input
-                    type="text"
-                    name="CEP"
-                    placeholder="Insira seu CEP."
-                    required
-                    maxLength={8}
-                    minLength={8}
-                    value={address.CEP}
-                    onChange={handleChangeUpdate}
-                    disabled={status && true}
-                  />
-                </label>
-
-                <label>
-                  <span>Estado: </span>
-                  <select
-                    name="state"
-                    required
-                    value={address.state}
-                    onChange={handleChangeUpdate}
-                    disabled={loadingStatesIBGE || (status && true)}
+        {!loading ? (
+          <>
+            {user && (
+              <>
+                <div className={styles.status}>
+                  <p
+                    style={{
+                      color: user.status
+                        ? "rgb(45, 220, 15)"
+                        : "rgb(167, 0, 0)",
+                    }}
                   >
-                    <option value="">Selecione seu estado.</option>
-                    {statesIBGE &&
-                      statesIBGE.map((data) => (
-                        <option key={data.id} value={data.sigla}>
-                          {data.nome}
-                        </option>
-                      ))}
-                  </select>
-                </label>
-
-                <label>
-                  <span>Cidade: </span>
-                  <input
-                    type="text"
-                    name="city"
-                    placeholder="Insira sua cidade."
-                    required
-                    value={address.city}
-                    onChange={handleChangeUpdate}
-                    disabled={status && true}
-                  />
-                </label>
-
-                <label>
-                  <span>Rua: </span>
-                  <input
-                    type="text"
-                    name="road"
-                    placeholder="Insira sua rua."
-                    required
-                    value={address.road}
-                    onChange={handleChangeUpdate}
-                    disabled={status && true}
-                  />
-                </label>
-
-                <label>
-                  <span>Número: </span>
-                  <input
-                    type="number"
-                    name="number"
-                    placeholder="Insira seu número."
-                    value={
-                      address.number && address.number > 0 ? address.number : ""
-                    }
-                    onChange={handleChangeUpdate}
-                    disabled={status && true}
-                  />
-                </label>
-
-                <label>
-                  <span>Referência: </span>
-                  <input
-                    type="text"
-                    name="reference"
-                    placeholder="Insira sua referência."
-                    value={address.reference}
-                    onChange={handleChangeUpdate}
-                    disabled={status && true}
-                  />
-                </label>
-                {status && (
-                  <p className={styles.warning_status}>
-                    Vistoria já realizada. Portanto, não é mais possível alterar
-                    o seu endereço cadastrado. Obrigado!
+                    <span>Status:</span>
+                    {user.status
+                      ? " Vistoria realizada!"
+                      : " Vistoria não realizada!"}
                   </p>
-                )}
-                <div className={styles.div_update_btn}>
-                  <div>
-                    <p>Cadastrado: {user.created_at}</p>
-                    {user.update_at && <p>Alterações: {user.update_at}</p>}
-                  </div>
-
-                  <button type="submit" className={styles.update_btn}>
-                    Salvar Alterações
-                  </button>
                 </div>
-              </form>
+                <form className={styles.form} onSubmit={handleSubmitUpdateUser}>
+                  <h3>Seus dados:</h3>
 
-              <div className={styles.form}>
-                <h3>Redefinir Senha</h3>
-                <form
-                  onSubmit={handleSubmitPassword}
-                  className={styles.password_form}
-                >
                   <label>
-                    <span>Sua senha:</span>
-                    <div className={styles.password_input}>
-                      <input
-                        type={passwordVisibility ? "text" : "password"}
-                        name="password"
-                        placeholder="Insira sua senha."
-                        required
-                        value={password}
-                        onChange={handleChandePassword}
-                      />
-
-                      <span
-                        onClick={() =>
-                          setPasswordVisibility(!passwordVisibility)
-                        }
-                      >
-                        {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
-                      </span>
-                    </div>
-                  </label>
-                  <label>
-                    <span>Nova senha:</span>
-                    <div className={styles.password_input}>
-                      <input
-                        type={newPasswordVisibility ? "text" : "password"}
-                        name="newPassword"
-                        placeholder="Insira sua nova senha."
-                        minLength={8}
-                        required
-                        value={newPassword}
-                        onChange={handleChandePassword}
-                      />
-
-                      <span
-                        onClick={() =>
-                          setNewPasswordVisibility(!newPasswordVisibility)
-                        }
-                      >
-                        {newPasswordVisibility ? <FaEye /> : <FaEyeSlash />}
-                      </span>
-                    </div>
+                    <span>Nome: </span>
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="Insira seu nome."
+                      required
+                      value={firstName}
+                      onChange={handleChangeUpdate}
+                    />
                   </label>
 
-                  <div className={styles.div_updatePassword_btn}>
+                  <label>
+                    <span>Email: </span>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Insira seu email."
+                      required
+                      autoComplete="username"
+                      value={email}
+                      onChange={handleChangeUpdate}
+                    />
+                  </label>
+
+                  <label>
+                    <span>Telefone: </span>
+                    <input
+                      type="text"
+                      value={phone}
+                      required
+                      placeholder="Digite seu telefone"
+                      minLength={14}
+                      maxLength={15}
+                      onChange={handleChangePhone}
+                    />
+                  </label>
+
+                  <h3>Seu endereço:</h3>
+
+                  <label>
+                    <span>CEP: </span>
+                    <input
+                      type="text"
+                      name="CEP"
+                      placeholder="Insira seu CEP."
+                      required
+                      maxLength={8}
+                      minLength={8}
+                      value={address.CEP}
+                      onChange={handleChangeUpdate}
+                      disabled={status && true}
+                    />
+                  </label>
+
+                  <label>
+                    <span>Estado: </span>
+                    <select
+                      name="state"
+                      required
+                      value={address.state}
+                      onChange={handleChangeUpdate}
+                      disabled={loadingStatesIBGE || (status && true)}
+                    >
+                      <option value="">Selecione seu estado.</option>
+                      {statesIBGE &&
+                        statesIBGE.map((data) => (
+                          <option key={data.id} value={data.sigla}>
+                            {data.nome}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+
+                  <label>
+                    <span>Cidade: </span>
+                    <input
+                      type="text"
+                      name="city"
+                      placeholder="Insira sua cidade."
+                      required
+                      value={address.city}
+                      onChange={handleChangeUpdate}
+                      disabled={status && true}
+                    />
+                  </label>
+
+                  <label>
+                    <span>Rua: </span>
+                    <input
+                      type="text"
+                      name="road"
+                      placeholder="Insira sua rua."
+                      required
+                      value={address.road}
+                      onChange={handleChangeUpdate}
+                      disabled={status && true}
+                    />
+                  </label>
+
+                  <label>
+                    <span>Número: </span>
+                    <input
+                      type="number"
+                      name="number"
+                      placeholder="Insira seu número."
+                      value={
+                        address.number && address.number > 0
+                          ? address.number
+                          : ""
+                      }
+                      onChange={handleChangeUpdate}
+                      disabled={status && true}
+                    />
+                  </label>
+
+                  <label>
+                    <span>Referência: </span>
+                    <input
+                      type="text"
+                      name="reference"
+                      placeholder="Insira sua referência."
+                      value={address.reference}
+                      onChange={handleChangeUpdate}
+                      disabled={status && true}
+                    />
+                  </label>
+                  {status && (
+                    <p className={styles.warning_status}>
+                      Vistoria já realizada. Portanto, não é mais possível
+                      alterar o seu endereço cadastrado. Obrigado!
+                    </p>
+                  )}
+                  <div className={styles.div_update_btn}>
+                    <div>
+                      <p>Cadastrado: {user.created_at}</p>
+                      {user.update_at && <p>Alterações: {user.update_at}</p>}
+                    </div>
+
                     <button type="submit" className={styles.update_btn}>
-                      {!loadingChangePassword ? "Alterar senha" : <Loading />}
+                      Salvar Alterações
                     </button>
                   </div>
                 </form>
-              </div>
-            </>
-          )}
-        </>
-      ) : (
-        <div className="loading">
-          <Loading />
-        </div>
-      )}
+
+                <div className={styles.form}>
+                  <h3>Redefinir Senha</h3>
+                  <form
+                    onSubmit={handleSubmitPassword}
+                    className={styles.password_form}
+                  >
+                    <label>
+                      <span>Sua senha:</span>
+                      <div className={styles.password_input}>
+                        <input
+                          type={passwordVisibility ? "text" : "password"}
+                          name="password"
+                          placeholder="Insira sua senha."
+                          required
+                          value={password}
+                          onChange={handleChandePassword}
+                        />
+
+                        <span
+                          onClick={() =>
+                            setPasswordVisibility(!passwordVisibility)
+                          }
+                        >
+                          {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                      </div>
+                    </label>
+                    <label>
+                      <span>Nova senha:</span>
+                      <div className={styles.password_input}>
+                        <input
+                          type={newPasswordVisibility ? "text" : "password"}
+                          name="newPassword"
+                          placeholder="Insira sua nova senha."
+                          minLength={8}
+                          required
+                          value={newPassword}
+                          onChange={handleChandePassword}
+                        />
+
+                        <span
+                          onClick={() =>
+                            setNewPasswordVisibility(!newPasswordVisibility)
+                          }
+                        >
+                          {newPasswordVisibility ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                      </div>
+                    </label>
+
+                    <div className={styles.div_updatePassword_btn}>
+                      <button type="submit" className={styles.update_btn}>
+                        {!loadingChangePassword ? "Alterar senha" : <Loading />}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div className="loading">
+            <Loading />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

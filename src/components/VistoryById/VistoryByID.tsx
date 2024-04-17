@@ -44,7 +44,6 @@ const VistoryByID = ({ id }: Props) => {
       status: user && !user.status,
       update_at: new Date().toLocaleString(),
     };
-    console.log(updateData);
     handleUpdateStatus(updateData);
   };
 

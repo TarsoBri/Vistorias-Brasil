@@ -13,7 +13,7 @@
     margin: 0 auto;
     width: 50vw;
     padding: 0 4em;
-    max-width: 300px;
+    max-width: 400px;
     border-radius: 10px;
     height: 400px;
     color: white;
@@ -22,9 +22,38 @@
     flex-direction: column;
     background-color: rgb(85, 85, 151);
     box-shadow: 5px 5px 10px #0000008c;
+
     position: fixed;
-    top: 20%;
-    left: 0;
-    right: 0;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
     gap: 2em;
+
+    .logout_container_buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap: 1.5em;
+
+        button {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .logout_container {
+        .logout_container_buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1.5em;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
 }

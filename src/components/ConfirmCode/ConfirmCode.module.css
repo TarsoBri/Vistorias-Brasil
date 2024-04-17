@@ -1,6 +1,6 @@
 .container {
     width: 90vw;
-    max-width: 600px;
+    max-width: 700px;
 
     h2,
     h3 {
@@ -11,7 +11,7 @@
 
     .form {
         margin: auto;
-        max-width: 400px;
+        max-width: 500px;
         display: flex;
         flex-direction: column;
 
@@ -94,23 +94,6 @@
             border: solid rgb(0, 69, 0) 2px;
             background-color: rgb(161, 255, 161);
             position: relative;
-
-            button {
-                background-color: transparent;
-                border: none;
-                font-size: 1.2em;
-                color: black;
-                position: absolute;
-                top: 0;
-                left: 0;
-                padding: .5em;
-                cursor: pointer;
-                transition: all .2s;
-            }
-
-            button:hover {
-                color: rgb(0, 195, 0);
-            }
         }
     }
 }

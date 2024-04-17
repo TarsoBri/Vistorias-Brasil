@@ -41,8 +41,8 @@ const AboutComponent = () => {
             Tendo como primeiro objetivo, facilitar vistorias pelo Brasil,
             possibilitando o necessitado do serviço solicitar sua vistoria
             preenchendo seus dados residências. E como segundo objetivo, ajudar
-            os vistoriadores do nosso serviço a acharem novas vistorias facilmente, além
-            de defini-las como já vistoradas ou não.
+            os vistoriadores do nosso serviço a acharem novas vistorias
+            facilmente, além de defini-las como já vistoriada ou não.
           </p>
         </div>
       </article>
