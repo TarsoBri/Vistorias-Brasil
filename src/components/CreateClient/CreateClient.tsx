@@ -59,7 +59,7 @@ const CreateClient = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [status, setStatus] = useState<boolean>(false);
+  const [status] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>(initialAddressState);
   const [password, setPassword] = useState<string>("");
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");

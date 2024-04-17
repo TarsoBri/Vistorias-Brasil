@@ -2,7 +2,6 @@ import { useState } from "react";
 
 // Contexts
 import useAuthToUseContext from "./useContexts/useAuthToUseContext";
-import useCodeHashed from "./useContexts/useCodeHashed";
 
 // api
 import { api } from "../Apis/api";
