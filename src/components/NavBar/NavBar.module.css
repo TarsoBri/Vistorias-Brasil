@@ -3,7 +3,7 @@
     flex-direction: row;
     width: 100vw;
     justify-content: space-around;
-    background-color: rgb(129, 129, 228);
+    background-color: rgb(93, 93, 174);
     align-items: center;
     font-size: 1.2em;
     position: fixed;
@@ -87,7 +87,7 @@
         }
 
         .routes {
-            background-color: rgb(99, 99, 187);
+            background-color: rgb(105, 105, 189);
             flex-direction: column;
             transform: translateX(100%);
             transition: all .5s;

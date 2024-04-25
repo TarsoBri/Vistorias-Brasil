@@ -91,6 +91,7 @@
                 select {
                     margin-left: 5px;
                     color: white;
+                    text-decoration: none;
                     font-size: .8em;
                     padding: .5em;
                     width: 100%;

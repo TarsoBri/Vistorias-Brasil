@@ -22,6 +22,8 @@
                 border-radius: 5px;
                 border: none;
                 cursor: pointer;
+                color: black;
+                text-decoration: none;
                 box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.685);
             }
         }
@@ -41,7 +43,7 @@
     .clients {
         margin-bottom: 2em;
         font-size: 12px;
-        background-color: rgb(94, 104, 177);
+        background-color: rgb(83, 93, 172);
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.377);
         padding: 1em 2em;
         border-radius: 5px;
