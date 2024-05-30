@@ -331,7 +331,7 @@ const CreateSurveryor = () => {
           type="submit"
           className={!loading ? "submit" : "submit_loading"}
         >
-          {!loading ? "Enviar" : <Loading />}
+          {!loading ? "Cadastrar-se" : <Loading />}
         </button>
         {[error, errorPassword, errorEmail].filter(Boolean).length > 0 && (
           <div className="container_erro">
