@@ -180,8 +180,9 @@ const CreateClient = () => {
           <FaArrowLeftLong />
         </button>
       </div>
-      <h2>Cadastrar vistoria para sua casa</h2>
+
       <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Cadastrar vistoria para sua casa</h2>
         <label>
           <span>
             Nome<span className={styles.mandatoryInput}>*</span>:

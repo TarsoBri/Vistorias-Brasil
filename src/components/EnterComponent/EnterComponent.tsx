@@ -68,12 +68,12 @@ const EnterComponent = ({ typeUser }: Props) => {
           <FaArrowLeftLong />
         </button>
       </div>
-      <h2>
-        {typeUser === "surveryor"
-          ? "Entrar como Vistoriador"
-          : "Entrar para ver vistoria"}
-      </h2>
       <form className={styles.form} onSubmit={handleSubmit}>
+        <h2>
+          {typeUser === "surveryor"
+            ? "Entrar como Vistoriador"
+            : "Entrar para ver vistoria"}
+        </h2>
         <label>
           <span>Email: </span>
           <input

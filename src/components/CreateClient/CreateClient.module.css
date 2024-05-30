@@ -2,10 +2,6 @@
     width: 90vw;
     max-width: 700px;
 
-    h2 {
-        text-align: center;
-        margin-block: 1.5;
-    }
 
     .form {
         margin: auto;
@@ -13,6 +9,16 @@
         display: flex;
         gap: 2em;
         flex-direction: column;
+        background-color: rgb(39, 43, 69);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.234);
+        margin-top: 2em;
+        padding: 2em;
+        border-radius: 10px;
+
+        h2 {
+            text-align: center;
+            margin: 0;
+        }
 
         h3 {
             margin: 0;

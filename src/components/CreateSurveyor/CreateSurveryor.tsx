@@ -178,8 +178,8 @@ const CreateSurveryor = () => {
           <FaArrowLeftLong />
         </button>
       </div>
-      <h2>Cadastrar novo vistoriador</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
+        <h2>Cadastrar novo vistoriador</h2>
         <label>
           <span>
             Nome<span className={styles.mandatoryInput}>*</span>:

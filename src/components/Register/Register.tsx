@@ -19,7 +19,7 @@ const Register = () => {
           <div>
             <h3>Cadastreie um novo vistoriador</h3>
             <Link to={"/RegisterSurveryor"} className="submit">
-              Cadastrar
+              Cadastrar-se
             </Link>
           </div>
           <div>
@@ -36,7 +36,7 @@ const Register = () => {
           <div>
             <h3>Cadastreie uma nova vistoria</h3>
             <Link to={"/RegisterClient"} className="submit">
-              Cadastrar
+              Cadastrar-se
             </Link>
           </div>
           <div>
